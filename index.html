@@ -67,9 +67,10 @@
             z-index: 9000;
             background-color: var(--midnight-dark);
             display: flex;
-            justify-content: center;
-            align-items: flex-end; /* Position button at bottom */
-            padding-bottom: 70px;
+            flex-direction: column;
+            justify-content: flex-end; /* Position elements at bottom */
+            align-items: center;
+            padding-bottom: 60px;
             transition: opacity 1.2s ease, visibility 1.2s ease;
         }
 
@@ -97,6 +98,32 @@
             position: relative;
             z-index: 3;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Intro Music Toggle Button */
+        .intro-music-btn {
+            background: rgba(20, 13, 7, 0.85);
+            border: 2px solid var(--antique-gold);
+            color: var(--gold-bright);
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-serif);
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px var(--gold-glow);
+            transition: all 0.3s ease;
+        }
+
+        .intro-music-btn:hover {
+            background: var(--antique-gold);
+            color: #000;
+            box-shadow: 0 0 25px var(--gold-bright);
         }
 
         /* Handwritten Open Invitation Button at Bottom */
@@ -134,7 +161,7 @@
             50% { text-shadow: 0 0 25px var(--gold-bright), 0 0 45px rgba(243, 207, 122, 1); }
         }
 
-        /* Audio Control */
+        /* Ambient Audio Floating Control (In-Page) */
         .audio-control {
             position: fixed;
             bottom: 20px;
@@ -510,13 +537,13 @@
         .swatch { display: flex; flex-direction: column; align-items: center; font-size: 0.85rem; font-weight: bold; }
         .swatch-circle { width: 55px; height: 55px; border-radius: 50%; margin-bottom: 8px; border: 2px solid var(--antique-gold); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
-        /* PAGE 7 — HARRY POTTER MOVING PORTRAIT GALLERY */
+        /* PAGE 7 — HARRY POTTER MOVING PORTRAIT GALLERY (REAL MOVING PHOTOS) */
         .moving-gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             margin-top: 20px;
         }
 
@@ -531,66 +558,50 @@
             overflow: hidden;
         }
 
-        .moving-portrait-canvas {
+        .moving-portrait-wrapper {
             width: 100%;
-            height: 220px;
+            height: 250px;
             border-radius: 2px;
             position: relative;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #150f0a;
+            background: #000;
         }
 
-        /* Generated Dummy Lady Avatar for Hogwarts Portrait */
-        .portrait-lady-art {
-            width: 130px;
-            height: 170px;
-            background: radial-gradient(circle at 50% 35%, #fceade 30%, #e2bfa7 65%, #2a1810 95%);
-            border-radius: 50% 50% 40% 40%;
-            position: relative;
-            filter: sepia(0.35) contrast(1.1);
-            animation: livingPortraitBreath 5s infinite ease-in-out;
+        .moving-portrait-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.35) contrast(1.15) brightness(0.9);
+            transform-origin: center center;
+            animation: hogwartsLivingPortrait 8s infinite ease-in-out alternate;
         }
 
-        .portrait-lady-art::before {
-            /* Hair & Veil */
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: -10px;
-            width: 150px;
-            height: 100px;
-            background: #1c100b;
-            border-radius: 50% 50% 20% 20%;
-        }
-
-        .portrait-lady-art::after {
-            /* Gown Accent */
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -5px;
-            width: 140px;
-            height: 70px;
-            background: var(--franz-lavender);
-            border-radius: 40% 40% 0 0;
-            opacity: 0.8;
-        }
-
-        /* Magic Moving Animations for Hogwarts Portraits */
-        @keyframes livingPortraitBreath {
-            0%, 100% { transform: scale(1) translateY(0) rotate(0deg); filter: sepia(0.35) brightness(1); }
-            50% { transform: scale(1.03) translateY(-4px) rotate(1deg); filter: sepia(0.2) brightness(1.1); }
+        /* Magical Moving Animation for Real Photos */
+        @keyframes hogwartsLivingPortrait {
+            0% {
+                transform: scale(1) translate(0, 0) rotate(0deg);
+                filter: sepia(0.35) contrast(1.15) brightness(0.9);
+            }
+            33% {
+                transform: scale(1.08) translate(-5px, -3px) rotate(1deg);
+                filter: sepia(0.25) contrast(1.2) brightness(1.05);
+            }
+            66% {
+                transform: scale(1.04) translate(4px, -6px) rotate(-1deg);
+                filter: sepia(0.4) contrast(1.1) brightness(0.85);
+            }
+            100% {
+                transform: scale(1.12) translate(0, -2px) rotate(0.5deg);
+                filter: sepia(0.3) contrast(1.25) brightness(1);
+            }
         }
 
         .portrait-caption {
             font-family: var(--font-handwritten);
             color: var(--gold-bright);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-align: center;
-            margin-top: 8px;
+            margin-top: 10px;
             font-weight: bold;
         }
 
@@ -649,11 +660,12 @@
 </head>
 <body>
 
-    <!-- AUDIO ATMOSPHERE -->
-    <button class="audio-control" id="audio-btn" onclick="toggleAudio()">🔊 ATMOSPHERE ON</button>
+    <!-- AUDIO ATMOSPHERE (HPsong.mp3) -->
     <audio id="bg-audio" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cinematic-documentary-115669.mp3" type="audio/mpeg">
+        <source src="HPsong.mp3" type="audio/mpeg">
     </audio>
+
+    <button class="audio-control" id="audio-btn" onclick="toggleAudio()">🔊 MUSIC ON</button>
 
     <!-- FULLSCREEN INTRO VIDEO OVERLAY -->
     <div id="video-intro-overlay">
@@ -662,7 +674,10 @@
         </video>
         <div class="video-shade"></div>
         <div class="intro-content">
-            <!-- Handwritten Button Positioned at Bottom -->
+            <!-- Music Button on Intro Screen -->
+            <button class="intro-music-btn" id="intro-music-toggle" onclick="toggleAudio()">🎵 PLAY MUSIC</button>
+            
+            <!-- Handwritten Open Invitation Button -->
             <button class="handwritten-open-btn" id="open-btn" onclick="enterInvitation()">Open Invitation ✦</button>
         </div>
     </div>
@@ -821,7 +836,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 7: HARRY POTTER MOVING PORTRAIT GALLERY -->
+            <!-- PAGE 7: HARRY POTTER MOVING PORTRAIT GALLERY (REAL MOVING PHOTOS) -->
             <div class="page" id="page-6">
                 <div class="chapter-number">CHAPTER VII</div>
                 <div class="chapter-title">The Living Gallery</div>
@@ -829,20 +844,20 @@
 
                 <div class="moving-gallery-grid">
                     <div class="portrait-frame">
-                        <div class="moving-portrait-canvas">
-                            <div class="portrait-lady-art" style="animation-duration: 4.5s;"></div>
+                        <div class="moving-portrait-wrapper">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" alt="Portrait 1">
                         </div>
                         <div class="portrait-caption">I. Quiet Magic</div>
                     </div>
                     <div class="portrait-frame">
-                        <div class="moving-portrait-canvas">
-                            <div class="portrait-lady-art" style="animation-duration: 6s; animation-delay: 1s;"></div>
+                        <div class="moving-portrait-wrapper">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" style="animation-delay: 1.5s; animation-duration: 9.5s;" alt="Portrait 2">
                         </div>
                         <div class="portrait-caption">II. The Observant Mind</div>
                     </div>
                     <div class="portrait-frame">
-                        <div class="moving-portrait-canvas">
-                            <div class="portrait-lady-art" style="animation-duration: 5.2s; animation-delay: 0.5s;"></div>
+                        <div class="moving-portrait-wrapper">
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" style="animation-delay: 3s; animation-duration: 7s;" alt="Portrait 3">
                         </div>
                         <div class="portrait-caption">III. Chapter XVIII</div>
                     </div>
@@ -883,9 +898,10 @@
     </div>
 
     <script>
-        /* Video Intro Logic: Pauses automatically at 10.0 seconds */
+        /* Video Intro Timing Logic: Pauses automatically at 10.0 seconds */
         const video = document.getElementById('bg-video');
         const openBtn = document.getElementById('open-btn');
+        const audio = document.getElementById('bg-audio');
 
         video.addEventListener('timeupdate', () => {
             if (video.currentTime >= 10.0) {
@@ -896,11 +912,14 @@
 
         function enterInvitation() {
             const overlay = document.getElementById('video-intro-overlay');
-            const audio = document.getElementById('bg-audio');
+            
+            // Ensure HPsong.mp3 plays if not started yet
+            if (audio.paused) {
+                audio.play().catch(() => {});
+            }
             
             overlay.style.opacity = '0';
             overlay.style.visibility = 'hidden';
-            audio.play().catch(() => {});
         }
 
         /* Sorting Hat Logic */
@@ -926,7 +945,7 @@
             document.getElementById('hub-title').style.color = selectedHouse.color;
         }
 
-        /* Page Turning System with Return-to-Menu Navigation */
+        /* Page Turning System with Strict Return-to-Menu Navigation */
         let currentPage = 0;
         const totalPages = document.querySelectorAll('.page').length;
 
@@ -1022,15 +1041,18 @@
             document.getElementById('modal-overlay').style.display = 'none';
         }
 
+        /* Audio Toggle Logic */
         function toggleAudio() {
-            const audio = document.getElementById('bg-audio');
             const btn = document.getElementById('audio-btn');
+            const introBtn = document.getElementById('intro-music-toggle');
             if (audio.paused) {
                 audio.play();
-                btn.innerText = "🔊 ATMOSPHERE ON";
+                btn.innerText = "🔊 MUSIC ON";
+                introBtn.innerText = "🔊 MUSIC ON";
             } else {
                 audio.pause();
-                btn.innerText = "🔇 ATMOSPHERE OFF";
+                btn.innerText = "🔇 MUSIC OFF";
+                introBtn.innerText = "🔇 MUSIC OFF";
             }
         }
     </script>
