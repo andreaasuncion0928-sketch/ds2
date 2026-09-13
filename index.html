@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FRANZ XVIII — The Hogwarts Chapter</title>
-    <!-- Google Fonts for HP Aesthetic -->
+    <!-- Google Fonts for HP Aesthetic & Handwritten Styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=IM+Fell+English+SC&family=Pirata+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=IM+Fell+English+SC&family=Pinyon+Script&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --midnight-dark: #05060a;
             --antique-gold: #c69c3a;
             --gold-bright: #f3cf7a;
-            --gold-glow: rgba(243, 207, 122, 0.4);
+            --gold-glow: rgba(243, 207, 122, 0.5);
             --ink-black: #1a0f07;
             --ink-sub: #3d2612;
             --deep-burgundy: #6b1222;
@@ -28,9 +28,9 @@
             --house-glow: rgba(37, 99, 235, 0.3);
             
             --font-hp-title: 'Cinzel Decorative', serif;
-            --font-magic: 'Pirata One', cursive;
+            --font-handwritten: 'IM Fell English SC', serif;
+            --font-script: 'Pinyon Script', cursive;
             --font-serif: 'Cinzel', serif;
-            --font-parchment: 'IM Fell English SC', serif;
             --font-body: 'Inter', sans-serif;
         }
 
@@ -73,10 +73,9 @@
             z-index: 9000;
             background-color: var(--midnight-dark);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease, visibility 1s ease;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
         }
 
         #bg-video {
@@ -95,7 +94,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(5,6,10,0.3) 0%, rgba(5,6,10,0.88) 100%);
+            background: radial-gradient(circle, rgba(5,6,10,0.1) 0%, rgba(5,6,10,0.75) 100%);
             z-index: 2;
         }
 
@@ -103,49 +102,47 @@
             position: relative;
             z-index: 3;
             text-align: center;
-            max-width: 600px;
-            padding: 20px;
         }
 
-        .intro-letter-text {
-            font-family: var(--font-parchment);
+        /* Magical Handwritten Open Invitation Text (No Box) */
+        .handwritten-open-btn {
+            background: none;
+            border: none;
+            outline: none;
+            font-family: var(--font-handwritten);
             color: var(--gold-bright);
-            font-size: 1.5rem;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px rgba(0,0,0,0.9);
-        }
-
-        /* Open Invitation Button (Revealed at 10.0s) */
-        .btn-open-invitation {
-            display: inline-block;
-            background: rgba(20, 13, 7, 0.95);
-            border: 2px solid var(--antique-gold);
-            color: var(--gold-bright);
-            padding: 14px 35px;
-            font-family: var(--font-serif);
-            font-weight: 700;
-            font-size: 1.05rem;
-            letter-spacing: 3px;
+            font-size: 2.8rem;
+            letter-spacing: 4px;
             cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 0 25px var(--gold-glow);
+            text-shadow: 0 0 12px var(--gold-glow), 0 0 25px rgba(243, 207, 122, 0.8), 2px 2px 5px rgba(0,0,0,0.9);
             opacity: 0;
-            transform: translateY(15px);
+            transform: scale(0.92);
             pointer-events: none;
-            transition: all 0.8s ease;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            display: inline-block;
         }
 
-        .btn-open-invitation.visible {
+        .handwritten-open-btn.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1);
             pointer-events: all;
+            animation: pulseSpell 2.5s infinite ease-in-out;
         }
 
-        .btn-open-invitation:hover {
-            background: var(--antique-gold);
-            color: #000;
-            box-shadow: 0 0 35px var(--gold-bright);
+        .handwritten-open-btn:hover {
+            color: #ffffff;
+            text-shadow: 0 0 20px #ffffff, 0 0 35px var(--gold-bright);
+            transform: scale(1.05);
+        }
+
+        @keyframes pulseSpell {
+            0%, 100% {
+                text-shadow: 0 0 12px var(--gold-glow), 0 0 25px rgba(243, 207, 122, 0.6), 2px 2px 5px rgba(0,0,0,0.9);
+            }
+            50% {
+                text-shadow: 0 0 22px var(--gold-bright), 0 0 40px rgba(243, 207, 122, 1), 2px 2px 8px rgba(0,0,0,1);
+            }
         }
 
         /* Audio Control */
@@ -263,7 +260,7 @@
         }
 
         .chapter-subtitle {
-            font-family: var(--font-parchment);
+            font-family: var(--font-handwritten);
             color: var(--ink-sub);
             font-size: 1.5rem;
             text-align: center;
@@ -305,7 +302,7 @@
         }
 
         .invitation-age {
-            font-family: var(--font-parchment);
+            font-family: var(--font-handwritten);
             font-size: 2.3rem;
             color: var(--deep-burgundy);
             margin-bottom: 15px;
@@ -427,18 +424,9 @@
             margin-top: 20px;
         }
 
-        /* Custom Scrollbar */
-        .eighteens-scroll-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        .eighteens-scroll-container::-webkit-scrollbar-track {
-            background: rgba(20, 13, 7, 0.2);
-            border-radius: 4px;
-        }
-        .eighteens-scroll-container::-webkit-scrollbar-thumb {
-            background: var(--antique-gold);
-            border-radius: 4px;
-        }
+        .eighteens-scroll-container::-webkit-scrollbar { width: 8px; }
+        .eighteens-scroll-container::-webkit-scrollbar-track { background: rgba(20, 13, 7, 0.2); border-radius: 4px; }
+        .eighteens-scroll-container::-webkit-scrollbar-thumb { background: var(--antique-gold); border-radius: 4px; }
 
         .section-divider-title {
             font-family: var(--font-hp-title);
@@ -479,9 +467,7 @@
         }
 
         .eighteen-item:hover .eighteen-number,
-        .eighteen-item:hover .eighteen-name {
-            color: #000;
-        }
+        .eighteen-item:hover .eighteen-name { color: #000; }
 
         .eighteen-number {
             font-family: var(--font-serif);
@@ -500,7 +486,7 @@
             word-break: break-word;
         }
 
-        /* 06 — THE EVENING (HIGHLIGHTED EVENT DETAILS) */
+        /* 06 — THE EVENING */
         .event-highlights-box {
             background: rgba(20, 13, 7, 0.92);
             border: 3px double var(--antique-gold);
@@ -564,7 +550,7 @@
             color: var(--ink-black);
         }
 
-        /* 07 — DRESS CODE & MAP (HIGH CONTRAST HIGHLIGHT) */
+        /* 07 — DRESS CODE & MAP */
         .dress-code-highlight-box {
             background: rgba(10, 15, 25, 0.95);
             border: 3px double var(--gold-bright);
@@ -648,6 +634,7 @@
             .eighteens-grid { grid-template-columns: repeat(3, 1fr); }
             .invitation-name { font-size: 2.8rem; }
             .chapter-title { font-size: 1.9rem; }
+            .handwritten-open-btn { font-size: 2.1rem; }
             .nav-arrow { width: 45px; height: 45px; font-size: 1.2rem; }
             .nav-arrow.left { left: 10px; }
             .nav-arrow.right { right: 10px; }
@@ -670,12 +657,8 @@
         </video>
         <div class="video-shade"></div>
         <div class="intro-content">
-            <div class="intro-letter-text">
-                By order of the Hogwarts School of Witchcraft and Wizardry,<br>
-                you are cordially invited to a very special celebration...
-            </div>
-            <!-- Open Invitation button integrated into letter text (Reveals at 10.0s) -->
-            <button class="btn-open-invitation" id="open-btn" onclick="enterInvitation()">OPEN INVITATION ✦</button>
+            <!-- Magical Handwritten Open Invitation Text (Appears at 10.0s) -->
+            <button class="handwritten-open-btn" id="open-btn" onclick="enterInvitation()">Open Invitation ✦</button>
         </div>
     </div>
 
@@ -846,7 +829,7 @@
 
                 <div style="border-top: 2px dashed var(--deep-burgundy); padding-top: 20px; text-align: center;">
                     <div style="font-family: var(--font-hp-title); font-size: 2.2rem; color: var(--royal-blue); letter-spacing: 4px;">FRANZ XVIII</div>
-                    <p style="font-family: var(--font-parchment); font-size: 1.6rem; color: var(--franz-lavender); margin-top: 5px; font-weight: bold;">The adventure begins.</p>
+                    <p style="font-family: var(--font-handwritten); font-size: 1.6rem; color: var(--franz-lavender); margin-top: 5px; font-weight: bold;">The adventure begins.</p>
                     <div style="margin-top: 15px; font-family: var(--font-hp-title); font-size: 0.9rem; letter-spacing: 4px; color: var(--deep-burgundy);">✦ MISCHIEF MANAGED ✦</div>
                 </div>
             </div>
@@ -860,7 +843,7 @@
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h4 id="modal-tagline" style="font-family: var(--font-hp-title); color: var(--deep-burgundy);">XVIII ROSES</h4>
             <h3 id="modal-title" style="font-family: var(--font-hp-title); font-size: 1.8rem; margin: 10px 0 5px 0; color: var(--royal-blue);">Participant Name</h3>
-            <div class="subtitle" id="modal-subtitle" style="font-family: var(--font-parchment); color: var(--deep-burgundy);">A Wish for Courage</div>
+            <div class="subtitle" id="modal-subtitle" style="font-family: var(--font-handwritten); color: var(--deep-burgundy);">A Wish for Courage</div>
             <p id="modal-message" style="font-size: 1.05rem; line-height: 1.7; color: #222;">May Franz always know her worth and have the courage to follow the path that feels truly hers.</p>
         </div>
     </div>
