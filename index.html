@@ -21,11 +21,6 @@
             --royal-blue: #0f2447;
             --franz-lavender: #6b5299;
             --franz-lavender-glow: rgba(179, 157, 219, 0.6);
-
-            /* Dynamic House Colors (Default Ravenclaw) */
-            --house-primary: #0f2447;
-            --house-accent: #2563eb;
-            --house-glow: rgba(37, 99, 235, 0.3);
             
             --font-hp-title: 'Cinzel Decorative', serif;
             --font-handwritten: 'IM Fell English SC', serif;
@@ -43,7 +38,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Locked window scrolling for chapter pages */
+            overflow: hidden; /* Lock scroll for book page-turning */
             background-color: var(--midnight-dark);
             font-family: var(--font-body);
             color: var(--ink-black);
@@ -60,7 +55,6 @@
             background-size: cover;
             background-position: center;
             z-index: 1;
-            transition: filter 0.8s ease;
         }
 
         /* Fullscreen Video Overlay Intro */
@@ -74,7 +68,8 @@
             background-color: var(--midnight-dark);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end; /* Position button at bottom */
+            padding-bottom: 70px;
             transition: opacity 1.2s ease, visibility 1.2s ease;
         }
 
@@ -94,7 +89,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(5,6,10,0.1) 0%, rgba(5,6,10,0.75) 100%);
+            background: linear-gradient(to top, rgba(5,6,10,0.95) 0%, rgba(5,6,10,0.2) 60%);
             z-index: 2;
         }
 
@@ -104,28 +99,27 @@
             text-align: center;
         }
 
-        /* Magical Handwritten Open Invitation Text (No Box) */
+        /* Handwritten Open Invitation Button at Bottom */
         .handwritten-open-btn {
             background: none;
             border: none;
             outline: none;
             font-family: var(--font-handwritten);
             color: var(--gold-bright);
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             letter-spacing: 4px;
             cursor: pointer;
             text-shadow: 0 0 12px var(--gold-glow), 0 0 25px rgba(243, 207, 122, 0.8), 2px 2px 5px rgba(0,0,0,0.9);
             opacity: 0;
-            transform: scale(0.92);
+            transform: translateY(20px);
             pointer-events: none;
             transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
-            display: inline-block;
         }
 
         .handwritten-open-btn.visible {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
             pointer-events: all;
             animation: pulseSpell 2.5s infinite ease-in-out;
         }
@@ -133,16 +127,11 @@
         .handwritten-open-btn:hover {
             color: #ffffff;
             text-shadow: 0 0 20px #ffffff, 0 0 35px var(--gold-bright);
-            transform: scale(1.05);
         }
 
         @keyframes pulseSpell {
-            0%, 100% {
-                text-shadow: 0 0 12px var(--gold-glow), 0 0 25px rgba(243, 207, 122, 0.6), 2px 2px 5px rgba(0,0,0,0.9);
-            }
-            50% {
-                text-shadow: 0 0 22px var(--gold-bright), 0 0 40px rgba(243, 207, 122, 1), 2px 2px 8px rgba(0,0,0,1);
-            }
+            0%, 100% { text-shadow: 0 0 12px var(--gold-glow), 0 0 25px rgba(243, 207, 122, 0.6); }
+            50% { text-shadow: 0 0 25px var(--gold-bright), 0 0 45px rgba(243, 207, 122, 1); }
         }
 
         /* Audio Control */
@@ -163,7 +152,7 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.7);
         }
 
-        /* Book & Chapter Navigation Structure */
+        /* Book Structure */
         .book-container {
             position: relative;
             width: 100%;
@@ -238,7 +227,7 @@
         .nav-arrow.right { right: 20px; }
         .nav-arrow.disabled { opacity: 0.2; pointer-events: none; }
 
-        /* General Typography */
+        /* Typography */
         .chapter-number {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
@@ -251,7 +240,7 @@
         .chapter-title {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             font-weight: 900;
             text-align: center;
             margin-bottom: 8px;
@@ -292,7 +281,7 @@
             box-shadow: 0 0 25px var(--gold-bright);
         }
 
-        /* 02 — INVITATION PAGE */
+        /* PAGE 1 — INVITATION */
         .invitation-name {
             font-family: var(--font-hp-title);
             font-size: 3.8rem;
@@ -317,7 +306,7 @@
             opacity: 0.6;
         }
 
-        /* 03 — SORTING CEREMONY */
+        /* PAGE 2 — SORTING CEREMONY */
         .sorting-hat-btn {
             font-size: 5rem;
             cursor: pointer;
@@ -327,9 +316,7 @@
             filter: drop-shadow(0 0 15px var(--antique-gold));
         }
 
-        .sorting-hat-btn:hover {
-            transform: scale(1.15) rotate(-5deg);
-        }
+        .sorting-hat-btn:hover { transform: scale(1.15) rotate(-5deg); }
 
         .houses-grid {
             display: grid;
@@ -347,7 +334,6 @@
             background: rgba(15, 10, 6, 0.92);
             color: #fff;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
         .house-card.gryffindor { border-color: #b91c1c; background: rgba(80, 10, 10, 0.92); }
@@ -368,12 +354,12 @@
             text-align: center;
         }
 
-        /* 04 — MAIN MENU HUB */
+        /* PAGE 3 — MAIN MENU HUB */
         .hub-navigation {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 25px;
             width: 100%;
             max-width: 450px;
         }
@@ -382,10 +368,10 @@
             background: #140d07;
             border: 2px solid var(--antique-gold);
             color: var(--gold-bright);
-            padding: 18px 25px;
+            padding: 16px 25px;
             text-align: center;
             font-family: var(--font-serif);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             letter-spacing: 2px;
             transition: all 0.3s ease;
@@ -414,7 +400,7 @@
             color: #4ade80;
         }
 
-        /* 05 — SCROLLABLE 18s SECTION */
+        /* PAGE 4 — SCROLLABLE 18s */
         .eighteens-scroll-container {
             width: 100%;
             max-width: 850px;
@@ -431,7 +417,7 @@
         .section-divider-title {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin: 30px 0 15px 0;
             border-bottom: 2px solid var(--deep-burgundy);
             padding-bottom: 5px;
@@ -477,16 +463,9 @@
         }
 
         .eighteen-icon { font-size: 1.2rem; margin: 2px 0; }
+        .eighteen-name { font-size: 0.7rem; font-weight: 700; color: #f5efe6; word-break: break-word; }
 
-        .eighteen-name {
-            font-size: 0.7rem;
-            font-weight: 700;
-            line-height: 1.1;
-            color: #f5efe6;
-            word-break: break-word;
-        }
-
-        /* 06 — THE EVENING */
+        /* PAGE 5 — THE EVENING */
         .event-highlights-box {
             background: rgba(20, 13, 7, 0.92);
             border: 3px double var(--antique-gold);
@@ -500,57 +479,20 @@
             max-width: 600px;
         }
 
-        .highlight-title {
-            font-family: var(--font-hp-title);
-            color: var(--gold-bright);
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
+        .highlight-title { font-family: var(--font-hp-title); color: var(--gold-bright); font-size: 1.2rem; margin-bottom: 5px; }
+        .highlight-detail { font-family: var(--font-serif); font-size: 1.15rem; font-weight: bold; color: var(--gold-bright); }
 
-        .highlight-detail {
-            font-family: var(--font-serif);
-            font-size: 1.15rem;
-            font-weight: bold;
-            color: var(--gold-bright);
-        }
-
-        .timeline {
-            max-width: 600px;
-            width: 100%;
-            border-left: 3px solid var(--deep-burgundy);
-            padding-left: 30px;
-            text-align: left;
-        }
-
+        .timeline { max-width: 600px; width: 100%; border-left: 3px solid var(--deep-burgundy); padding-left: 30px; text-align: left; }
         .timeline-item { margin-bottom: 20px; position: relative; }
-
         .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -38px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--antique-gold);
-            border: 2px solid var(--deep-burgundy);
+            content: ''; position: absolute; left: -38px; top: 5px; width: 12px; height: 12px;
+            border-radius: 50%; background: var(--antique-gold); border: 2px solid var(--deep-burgundy);
         }
 
-        .timeline-time {
-            font-family: var(--font-hp-title);
-            color: var(--deep-burgundy);
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
+        .timeline-time { font-family: var(--font-hp-title); color: var(--deep-burgundy); font-size: 0.95rem; font-weight: 700; }
+        .timeline-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 900; color: var(--ink-black); }
 
-        .timeline-title {
-            font-family: var(--font-serif);
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--ink-black);
-        }
-
-        /* 07 — DRESS CODE & MAP */
+        /* PAGE 6 — DRESS CODE & MAP */
         .dress-code-highlight-box {
             background: rgba(10, 15, 25, 0.95);
             border: 3px double var(--gold-bright);
@@ -561,32 +503,95 @@
             box-shadow: 0 0 30px var(--gold-glow);
             max-width: 650px;
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        .swatch-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
+        .swatch-container { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
+        .swatch { display: flex; flex-direction: column; align-items: center; font-size: 0.85rem; font-weight: bold; }
+        .swatch-circle { width: 55px; height: 55px; border-radius: 50%; margin-bottom: 8px; border: 2px solid var(--antique-gold); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+
+        /* PAGE 7 — HARRY POTTER MOVING PORTRAIT GALLERY */
+        .moving-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
             margin-top: 20px;
         }
 
-        .swatch {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 0.85rem;
-            font-weight: bold;
-            letter-spacing: 1px;
+        .portrait-frame {
+            border: 8px solid #3d2a17;
+            outline: 2px solid var(--antique-gold);
+            background: #0d0905;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.9);
+            position: relative;
+            overflow: hidden;
         }
 
-        .swatch-circle {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            margin-bottom: 8px;
-            border: 2px solid var(--antique-gold);
-            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+        .moving-portrait-canvas {
+            width: 100%;
+            height: 220px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #150f0a;
+        }
+
+        /* Generated Dummy Lady Avatar for Hogwarts Portrait */
+        .portrait-lady-art {
+            width: 130px;
+            height: 170px;
+            background: radial-gradient(circle at 50% 35%, #fceade 30%, #e2bfa7 65%, #2a1810 95%);
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            filter: sepia(0.35) contrast(1.1);
+            animation: livingPortraitBreath 5s infinite ease-in-out;
+        }
+
+        .portrait-lady-art::before {
+            /* Hair & Veil */
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -10px;
+            width: 150px;
+            height: 100px;
+            background: #1c100b;
+            border-radius: 50% 50% 20% 20%;
+        }
+
+        .portrait-lady-art::after {
+            /* Gown Accent */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -5px;
+            width: 140px;
+            height: 70px;
+            background: var(--franz-lavender);
+            border-radius: 40% 40% 0 0;
+            opacity: 0.8;
+        }
+
+        /* Magic Moving Animations for Hogwarts Portraits */
+        @keyframes livingPortraitBreath {
+            0%, 100% { transform: scale(1) translateY(0) rotate(0deg); filter: sepia(0.35) brightness(1); }
+            50% { transform: scale(1.03) translateY(-4px) rotate(1deg); filter: sepia(0.2) brightness(1.1); }
+        }
+
+        .portrait-caption {
+            font-family: var(--font-handwritten);
+            color: var(--gold-bright);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 8px;
+            font-weight: bold;
         }
 
         /* POPUP MODAL */
@@ -632,13 +637,13 @@
         /* Mobile Optimization */
         @media (max-width: 768px) {
             .eighteens-grid { grid-template-columns: repeat(3, 1fr); }
+            .moving-gallery-grid { grid-template-columns: 1fr; }
             .invitation-name { font-size: 2.8rem; }
-            .chapter-title { font-size: 1.9rem; }
-            .handwritten-open-btn { font-size: 2.1rem; }
+            .chapter-title { font-size: 1.8rem; }
+            .handwritten-open-btn { font-size: 2rem; }
             .nav-arrow { width: 45px; height: 45px; font-size: 1.2rem; }
             .nav-arrow.left { left: 10px; }
             .nav-arrow.right { right: 10px; }
-            .swatch-container { gap: 20px; }
         }
     </style>
 </head>
@@ -657,12 +662,12 @@
         </video>
         <div class="video-shade"></div>
         <div class="intro-content">
-            <!-- Magical Handwritten Open Invitation Text (Appears at 10.0s) -->
+            <!-- Handwritten Button Positioned at Bottom -->
             <button class="handwritten-open-btn" id="open-btn" onclick="enterInvitation()">Open Invitation ✦</button>
         </div>
     </div>
 
-    <!-- PAGE TURNING NAVIGATION ARROWS -->
+    <!-- NAVIGATION ARROWS -->
     <div class="nav-arrow left disabled" id="prev-btn" onclick="changePage(-1)">❮</div>
     <div class="nav-arrow right" id="next-btn" onclick="changePage(1)">❯</div>
 
@@ -721,7 +726,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 3: MAIN MENU HUB (DYNAMIC HOUSE THEMED) -->
+            <!-- PAGE 3: MAIN MENU HUB -->
             <div class="page" id="page-2">
                 <div class="chapter-number">CHAPTER III</div>
                 <div class="chapter-title" id="hub-title">THE GREAT HALL</div>
@@ -731,11 +736,12 @@
                     <div class="hub-btn" id="btn-18s" onclick="selectHubOption('18s', 3)">THE 18s ✦</div>
                     <div class="hub-btn disabled" id="btn-evening" onclick="selectHubOption('evening', 4)">THE EVENING ✦</div>
                     <div class="hub-btn disabled" id="btn-dress" onclick="selectHubOption('dress', 5)">DRESS CODE & MAP ✦</div>
-                    <div class="hub-btn disabled" id="btn-rsvp" onclick="selectHubOption('rsvp', 6)">RSVP ✦</div>
+                    <div class="hub-btn disabled" id="btn-gallery" onclick="selectHubOption('gallery', 6)">GALLERY ✦</div>
+                    <div class="hub-btn disabled" id="btn-rsvp" onclick="selectHubOption('rsvp', 7)">RSVP ✦</div>
                 </div>
             </div>
 
-            <!-- PAGE 4: SCROLLABLE 18s PAGE (ROSES, CANDLES, TOKENS) -->
+            <!-- PAGE 4: SCROLLABLE 18s -->
             <div class="page" id="page-3">
                 <div class="chapter-number">CHAPTER IV</div>
                 <div class="chapter-title">The 18s Traditions</div>
@@ -753,7 +759,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 5: THE EVENING (PROGRAM & HIGHLIGHTED DETAILS) -->
+            <!-- PAGE 5: THE EVENING -->
             <div class="page" id="page-4">
                 <div class="chapter-number">CHAPTER V</div>
                 <div class="chapter-title">The Evening</div>
@@ -815,9 +821,37 @@
                 </div>
             </div>
 
-            <!-- PAGE 7: RSVP -->
+            <!-- PAGE 7: HARRY POTTER MOVING PORTRAIT GALLERY -->
             <div class="page" id="page-6">
                 <div class="chapter-number">CHAPTER VII</div>
+                <div class="chapter-title">The Living Gallery</div>
+                <div class="chapter-subtitle">Moving Portraits of Franz</div>
+
+                <div class="moving-gallery-grid">
+                    <div class="portrait-frame">
+                        <div class="moving-portrait-canvas">
+                            <div class="portrait-lady-art" style="animation-duration: 4.5s;"></div>
+                        </div>
+                        <div class="portrait-caption">I. Quiet Magic</div>
+                    </div>
+                    <div class="portrait-frame">
+                        <div class="moving-portrait-canvas">
+                            <div class="portrait-lady-art" style="animation-duration: 6s; animation-delay: 1s;"></div>
+                        </div>
+                        <div class="portrait-caption">II. The Observant Mind</div>
+                    </div>
+                    <div class="portrait-frame">
+                        <div class="moving-portrait-canvas">
+                            <div class="portrait-lady-art" style="animation-duration: 5.2s; animation-delay: 0.5s;"></div>
+                        </div>
+                        <div class="portrait-caption">III. Chapter XVIII</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 8: RSVP -->
+            <div class="page" id="page-7">
+                <div class="chapter-number">CHAPTER VIII</div>
                 <div class="chapter-title">Send Your Owl</div>
                 <div class="chapter-subtitle">The Castle Awaits Your Response</div>
                 <p style="margin-bottom: 25px; text-align: center; font-size: 1.1rem; font-weight: 600;">Will you join Franz for her eighteenth chapter?</p>
@@ -849,7 +883,7 @@
     </div>
 
     <script>
-        /* Video Intro Timing Logic: Pauses automatically at exactly 10.0 seconds */
+        /* Video Intro Logic: Pauses automatically at 10.0 seconds */
         const video = document.getElementById('bg-video');
         const openBtn = document.getElementById('open-btn');
 
@@ -869,49 +903,30 @@
             audio.play().catch(() => {});
         }
 
-        /* Sorting Hat & Dynamic House Background Logic */
+        /* Sorting Hat Logic */
         const houses = [
-            { 
-                name: "GRYFFINDOR", 
-                quote: "Where dwell the brave at heart, their daring, nerve, and chivalry set Gryffindors apart.",
-                primary: "#740001", accent: "#d3a625", glow: "rgba(116, 0, 1, 0.4)"
-            },
-            { 
-                name: "RAVENCLAW", 
-                quote: "Wit beyond measure is man's greatest treasure.",
-                primary: "#0e1a40", accent: "#946b2d", glow: "rgba(14, 26, 64, 0.4)"
-            },
-            { 
-                name: "HUFFLEPUFF", 
-                quote: "Where they are just and loyal, those patient Hufflepuffs are true and unafraid of toil.",
-                primary: "#ecb939", accent: "#372e29", glow: "rgba(236, 185, 57, 0.4)"
-            },
-            { 
-                name: "SLYTHERIN", 
-                quote: "Or perhaps in Slytherin you'll make your real friends, those cunning folk use any means to achieve their ends.",
-                primary: "#1a472a", accent: "#aaaaaa", glow: "rgba(26, 71, 42, 0.4)"
-            }
+            { name: "GRYFFINDOR", quote: "Where dwell the brave at heart, their daring, nerve, and chivalry set Gryffindors apart.", color: "#740001" },
+            { name: "RAVENCLAW", quote: "Wit beyond measure is man's greatest treasure.", color: "#0e1a40" },
+            { name: "HUFFLEPUFF", quote: "Where they are just and loyal, those patient Hufflepuffs are true and unafraid of toil.", color: "#ecb939" },
+            { name: "SLYTHERIN", quote: "Or perhaps in Slytherin you'll make your real friends, those cunning folk use any means to achieve their ends.", color: "#1a472a" }
         ];
-
-        let selectedHouse = null;
 
         function sortGuest() {
             const resultBox = document.getElementById('sorting-result');
             const houseName = document.getElementById('house-name');
             const houseQuote = document.getElementById('house-quote');
             
-            selectedHouse = houses[Math.floor(Math.random() * houses.length)];
+            const selectedHouse = houses[Math.floor(Math.random() * houses.length)];
             
             houseName.innerText = `WELCOME TO ${selectedHouse.name}`;
             houseQuote.innerText = `"${selectedHouse.quote}"`;
             resultBox.style.display = 'block';
 
-            // Apply house colors to Chapter III Hub Title and Theme
             document.getElementById('hub-title').innerText = `${selectedHouse.name} HALL`;
-            document.getElementById('hub-title').style.color = selectedHouse.primary;
+            document.getElementById('hub-title').style.color = selectedHouse.color;
         }
 
-        /* Page Turning System */
+        /* Page Turning System with Return-to-Menu Navigation */
         let currentPage = 0;
         const totalPages = document.querySelectorAll('.page').length;
 
@@ -931,8 +946,8 @@
         }
 
         function changePage(direction) {
-            // If leaving page 3 (18s), return to Menu Hub (page 2)
-            if (currentPage === 3 && direction === 1) {
+            // Return to Main Menu Hub (Page 2) after completing any hub section (Pages 3, 4, 5, 6, 7)
+            if (currentPage >= 3 && direction === 1) {
                 goToPage(2);
                 return;
             }
@@ -949,8 +964,8 @@
             }
         }
 
-        /* Sequential Menu Hub State Management */
-        const hubState = { '18s': false, 'evening': false, 'dress': false };
+        /* Sequential Hub Menu Logic */
+        const hubState = { '18s': false, 'evening': false, 'dress': false, 'gallery': false };
 
         function selectHubOption(optionKey, targetPageIndex) {
             const btn = document.getElementById(`btn-${optionKey}`);
@@ -959,10 +974,11 @@
             hubState[optionKey] = true;
             btn.classList.add('completed');
 
-            // Unlock next options sequentially
+            // Unlock next option sequentially
             if (optionKey === '18s') document.getElementById('btn-evening').classList.remove('disabled');
             if (optionKey === 'evening') document.getElementById('btn-dress').classList.remove('disabled');
-            if (optionKey === 'dress') document.getElementById('btn-rsvp').classList.remove('disabled');
+            if (optionKey === 'dress') document.getElementById('btn-gallery').classList.remove('disabled');
+            if (optionKey === 'gallery') document.getElementById('btn-rsvp').classList.remove('disabled');
 
             goToPage(targetPageIndex);
         }
