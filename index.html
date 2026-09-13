@@ -19,8 +19,13 @@
             --ink-sub: #3d2612;
             --deep-burgundy: #6b1222;
             --royal-blue: #0f2447;
-            --franz-lavender: #4c3b6e;
+            --franz-lavender: #6b5299;
             --franz-lavender-glow: rgba(179, 157, 219, 0.6);
+
+            /* Dynamic House Colors (Default Ravenclaw) */
+            --house-primary: #0f2447;
+            --house-accent: #2563eb;
+            --house-glow: rgba(37, 99, 235, 0.3);
             
             --font-hp-title: 'Cinzel Decorative', serif;
             --font-magic: 'Pirata One', cursive;
@@ -38,13 +43,13 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Lock window scrolling for page turning effect */
+            overflow: hidden; /* Locked window scrolling for chapter pages */
             background-color: var(--midnight-dark);
             font-family: var(--font-body);
             color: var(--ink-black);
         }
 
-        /* Ambient Parchment Background */
+        /* Ambient Background Canvas */
         .parchment-viewport {
             position: fixed;
             top: 0;
@@ -55,7 +60,7 @@
             background-size: cover;
             background-position: center;
             z-index: 1;
-            perspective: 1500px;
+            transition: filter 0.8s ease;
         }
 
         /* Fullscreen Video Overlay Intro */
@@ -71,7 +76,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.2s ease, visibility 1.2s ease;
+            transition: opacity 1s ease, visibility 1s ease;
         }
 
         #bg-video {
@@ -90,7 +95,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(5,6,10,0.2) 0%, rgba(5,6,10,0.85) 100%);
+            background: radial-gradient(circle, rgba(5,6,10,0.3) 0%, rgba(5,6,10,0.88) 100%);
             z-index: 2;
         }
 
@@ -98,31 +103,42 @@
             position: relative;
             z-index: 3;
             text-align: center;
+            max-width: 600px;
+            padding: 20px;
         }
 
-        /* Open Invitation Button (Hidden until 10s video mark) */
+        .intro-letter-text {
+            font-family: var(--font-parchment);
+            color: var(--gold-bright);
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.9);
+        }
+
+        /* Open Invitation Button (Revealed at 10.0s) */
         .btn-open-invitation {
             display: inline-block;
             background: rgba(20, 13, 7, 0.95);
             border: 2px solid var(--antique-gold);
             color: var(--gold-bright);
-            padding: 16px 40px;
+            padding: 14px 35px;
             font-family: var(--font-serif);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             letter-spacing: 3px;
             cursor: pointer;
             border-radius: 4px;
             box-shadow: 0 0 25px var(--gold-glow);
             opacity: 0;
-            transform: scale(0.9);
+            transform: translateY(15px);
             pointer-events: none;
             transition: all 0.8s ease;
         }
 
         .btn-open-invitation.visible {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
             pointer-events: all;
         }
 
@@ -132,7 +148,25 @@
             box-shadow: 0 0 35px var(--gold-bright);
         }
 
-        /* Book & Page Turning Structure */
+        /* Audio Control */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2500;
+            background: rgba(20, 13, 7, 0.9);
+            border: 2px solid var(--antique-gold);
+            color: var(--gold-bright);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-serif);
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(0,0,0,0.7);
+        }
+
+        /* Book & Chapter Navigation Structure */
         .book-container {
             position: relative;
             width: 100%;
@@ -150,7 +184,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 40px;
+            padding: 50px 30px;
             box-sizing: border-box;
             opacity: 0;
             visibility: hidden;
@@ -173,13 +207,13 @@
             visibility: hidden;
         }
 
-        /* Page Turn Arrows Navigation */
+        /* Navigation Arrows */
         .nav-arrow {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
             z-index: 2000;
-            background: rgba(20, 13, 7, 0.8);
+            background: rgba(20, 13, 7, 0.85);
             border: 2px solid var(--antique-gold);
             color: var(--gold-bright);
             width: 55px;
@@ -203,11 +237,11 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        .nav-arrow.left { left: 25px; }
-        .nav-arrow.right { right: 25px; }
+        .nav-arrow.left { left: 20px; }
+        .nav-arrow.right { right: 20px; }
         .nav-arrow.disabled { opacity: 0.2; pointer-events: none; }
 
-        /* Typography & Details (Readable Ink on Parchment) */
+        /* General Typography */
         .chapter-number {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
@@ -220,7 +254,7 @@
         .chapter-title {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
-            font-size: 2.6rem;
+            font-size: 2.5rem;
             font-weight: 900;
             text-align: center;
             margin-bottom: 8px;
@@ -231,7 +265,7 @@
         .chapter-subtitle {
             font-family: var(--font-parchment);
             color: var(--ink-sub);
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             text-align: center;
             margin-bottom: 25px;
             font-weight: bold;
@@ -248,7 +282,7 @@
             letter-spacing: 2px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 25px;
+            margin-top: 20px;
             text-decoration: none;
             display: inline-block;
             border-radius: 4px;
@@ -261,7 +295,7 @@
             box-shadow: 0 0 25px var(--gold-bright);
         }
 
-        /* 02 — THE INVITATION */
+        /* 02 — INVITATION PAGE */
         .invitation-name {
             font-family: var(--font-hp-title);
             font-size: 3.8rem;
@@ -286,49 +320,7 @@
             opacity: 0.6;
         }
 
-        /* 03 — FRANZ'S STORY */
-        .franz-photo-frame {
-            width: 200px;
-            height: 250px;
-            border: 3px double var(--franz-lavender);
-            padding: 6px;
-            margin: 0 auto 20px auto;
-            box-shadow: 0 0 20px var(--franz-lavender-glow);
-            background: #0f0a14;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .franz-photo-placeholder {
-            width: 100%;
-            height: 100%;
-            background: #181224;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #e6e0f5;
-            font-family: var(--font-serif);
-            font-size: 0.8rem;
-            border: 1px dashed var(--franz-lavender);
-        }
-
-        .franz-story-text {
-            max-width: 700px;
-            font-size: 1.05rem;
-            line-height: 1.9;
-            color: var(--ink-black);
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .franz-highlight {
-            color: var(--franz-lavender);
-            font-family: var(--font-hp-title);
-            font-weight: 900;
-        }
-
-        /* 05 — SORTING CEREMONY */
+        /* 03 — SORTING CEREMONY */
         .sorting-hat-btn {
             font-size: 5rem;
             cursor: pointer;
@@ -368,7 +360,7 @@
 
         .sorting-result {
             margin-top: 25px;
-            padding: 25px;
+            padding: 20px;
             border: 3px double var(--antique-gold);
             background: rgba(15, 10, 6, 0.95);
             color: #fff;
@@ -379,45 +371,89 @@
             text-align: center;
         }
 
-        /* 06 — GREAT HALL HUB */
+        /* 04 — MAIN MENU HUB */
         .hub-navigation {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             margin-top: 30px;
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
         }
 
         .hub-btn {
             background: #140d07;
             border: 2px solid var(--antique-gold);
             color: var(--gold-bright);
-            padding: 20px;
+            padding: 18px 25px;
             text-align: center;
             font-family: var(--font-serif);
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 700;
             letter-spacing: 2px;
             transition: all 0.3s ease;
             border-radius: 4px;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        .hub-btn:hover {
+        .hub-btn:hover:not(.disabled) {
             background: var(--antique-gold);
             color: #000;
             box-shadow: 0 0 25px var(--gold-bright);
         }
 
-        /* 07, 08, 09 — THE 18s GRIDS */
+        .hub-btn.disabled {
+            opacity: 0.35;
+            background: #1a1612;
+            border-color: #555;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .hub-btn.completed {
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+
+        /* 05 — SCROLLABLE 18s SECTION */
+        .eighteens-scroll-container {
+            width: 100%;
+            max-width: 850px;
+            height: 60vh;
+            overflow-y: auto;
+            padding-right: 15px;
+            margin-top: 20px;
+        }
+
+        /* Custom Scrollbar */
+        .eighteens-scroll-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .eighteens-scroll-container::-webkit-scrollbar-track {
+            background: rgba(20, 13, 7, 0.2);
+            border-radius: 4px;
+        }
+        .eighteens-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--antique-gold);
+            border-radius: 4px;
+        }
+
+        .section-divider-title {
+            font-family: var(--font-hp-title);
+            color: var(--deep-burgundy);
+            font-size: 1.5rem;
+            margin: 30px 0 15px 0;
+            border-bottom: 2px solid var(--deep-burgundy);
+            padding-bottom: 5px;
+        }
+
         .eighteens-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
-            max-width: 900px;
+            gap: 10px;
             width: 100%;
-            margin-top: 25px;
         }
 
         .eighteen-item {
@@ -431,15 +467,14 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 4px;
-            padding: 6px;
+            padding: 4px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .eighteen-item:hover {
             border-color: #fff;
-            transform: translateY(-4px);
-            box-shadow: 0 0 20px var(--gold-bright);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--gold-bright);
             background: var(--antique-gold);
         }
 
@@ -450,22 +485,122 @@
 
         .eighteen-number {
             font-family: var(--font-serif);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 900;
             color: var(--gold-bright);
         }
 
-        .eighteen-icon {
-            font-size: 1.3rem;
-            margin: 2px 0;
-        }
+        .eighteen-icon { font-size: 1.2rem; margin: 2px 0; }
 
         .eighteen-name {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            line-height: 1.2;
+            line-height: 1.1;
             color: #f5efe6;
             word-break: break-word;
+        }
+
+        /* 06 — THE EVENING (HIGHLIGHTED EVENT DETAILS) */
+        .event-highlights-box {
+            background: rgba(20, 13, 7, 0.92);
+            border: 3px double var(--antique-gold);
+            padding: 25px 35px;
+            border-radius: 6px;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px var(--gold-glow);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .highlight-title {
+            font-family: var(--font-hp-title);
+            color: var(--gold-bright);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .highlight-detail {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--gold-bright);
+        }
+
+        .timeline {
+            max-width: 600px;
+            width: 100%;
+            border-left: 3px solid var(--deep-burgundy);
+            padding-left: 30px;
+            text-align: left;
+        }
+
+        .timeline-item { margin-bottom: 20px; position: relative; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--antique-gold);
+            border: 2px solid var(--deep-burgundy);
+        }
+
+        .timeline-time {
+            font-family: var(--font-hp-title);
+            color: var(--deep-burgundy);
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .timeline-title {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--ink-black);
+        }
+
+        /* 07 — DRESS CODE & MAP (HIGH CONTRAST HIGHLIGHT) */
+        .dress-code-highlight-box {
+            background: rgba(10, 15, 25, 0.95);
+            border: 3px double var(--gold-bright);
+            padding: 30px;
+            border-radius: 6px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 0 30px var(--gold-glow);
+            max-width: 650px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .swatch-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .swatch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .swatch-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            border: 2px solid var(--antique-gold);
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
 
         /* POPUP MODAL */
@@ -508,166 +643,48 @@
             font-weight: bold;
         }
 
-        /* 11 — PROGRAM TIMELINE */
-        .timeline {
-            max-width: 600px;
-            width: 100%;
-            margin-top: 25px;
-            border-left: 3px solid var(--deep-burgundy);
-            padding-left: 30px;
-            text-align: left;
-        }
-
-        .timeline-item {
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -38px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--antique-gold);
-            border: 2px solid var(--deep-burgundy);
-        }
-
-        .timeline-time {
-            font-family: var(--font-hp-title);
-            color: var(--deep-burgundy);
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        .timeline-title {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--ink-black);
-            margin: 2px 0;
-        }
-
-        /* 12 & 13 — VENUE & MAP */
-        .venue-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            width: 100%;
-            max-width: 750px;
-            margin-top: 20px;
-        }
-
-        .gallery-item {
-            height: 130px;
-            background: rgba(20, 13, 7, 0.88);
-            border: 2px solid var(--antique-gold);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: var(--font-serif);
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--gold-bright);
-            border-radius: 4px;
-        }
-
-        /* 14 — DRESS CODE */
-        .swatch-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 25px;
-        }
-
-        .swatch {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .swatch-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-bottom: 8px;
-            border: 2px solid var(--antique-gold);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        /* Particle Canvas Overlay */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
         /* Mobile Optimization */
         @media (max-width: 768px) {
-            .eighteens-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .hub-navigation {
-                grid-template-columns: 1fr;
-            }
-
-            .invitation-name {
-                font-size: 2.8rem;
-            }
-
-            .chapter-title {
-                font-size: 1.9rem;
-            }
-
-            .nav-arrow {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
+            .eighteens-grid { grid-template-columns: repeat(3, 1fr); }
+            .invitation-name { font-size: 2.8rem; }
+            .chapter-title { font-size: 1.9rem; }
+            .nav-arrow { width: 45px; height: 45px; font-size: 1.2rem; }
             .nav-arrow.left { left: 10px; }
             .nav-arrow.right { right: 10px; }
+            .swatch-container { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Particle Dust FX -->
-    <canvas id="particle-canvas"></canvas>
+    <!-- AUDIO ATMOSPHERE -->
+    <button class="audio-control" id="audio-btn" onclick="toggleAudio()">🔊 ATMOSPHERE ON</button>
+    <audio id="bg-audio" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cinematic-documentary-115669.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- FULLSCREEN INTRO VIDEO OVERLAY -->
     <div id="video-intro-overlay">
-        <video id="bg-video" autoplay loop muted playsinline>
+        <video id="bg-video" autoplay muted playsinline>
             <source src="HPintro.mp4" type="video/mp4">
         </video>
         <div class="video-shade"></div>
         <div class="intro-content">
-            <!-- Open Invitation button revealed after 10 seconds -->
+            <div class="intro-letter-text">
+                By order of the Hogwarts School of Witchcraft and Wizardry,<br>
+                you are cordially invited to a very special celebration...
+            </div>
+            <!-- Open Invitation button integrated into letter text (Reveals at 10.0s) -->
             <button class="btn-open-invitation" id="open-btn" onclick="enterInvitation()">OPEN INVITATION ✦</button>
         </div>
     </div>
-
-    <!-- AUDIO ATMOSPHERE -->
-    <audio id="bg-audio" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cinematic-documentary-115669.mp3" type="audio/mpeg">
-    </audio>
 
     <!-- PAGE TURNING NAVIGATION ARROWS -->
     <div class="nav-arrow left disabled" id="prev-btn" onclick="changePage(-1)">❮</div>
     <div class="nav-arrow right" id="next-btn" onclick="changePage(1)">❯</div>
 
     <!-- MAIN PARCHMENT VIEWPORT -->
-    <div class="parchment-viewport">
+    <div class="parchment-viewport" id="parchment-viewport">
         <div class="book-container">
 
             <!-- PAGE 1: THE INVITATION -->
@@ -686,26 +703,9 @@
                 <div style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--deep-burgundy); font-weight: 900; margin-top: 10px;">FELICIDAD MANSION</div>
             </div>
 
-            <!-- PAGE 2: HER STORY -->
+            <!-- PAGE 2: SORTING CEREMONY -->
             <div class="page" id="page-1">
                 <div class="chapter-number">CHAPTER II</div>
-                <div class="chapter-title" style="color: var(--franz-lavender);">Meet Franz</div>
-                <div class="chapter-subtitle">The Girl Behind the Magic</div>
-
-                <div class="franz-photo-frame">
-                    <div class="franz-photo-placeholder">[ PORTRAIT OF FRANZ ]</div>
-                </div>
-
-                <div class="franz-story-text">
-                    <p>Some magic is quiet. It doesn't need to announce itself. It can be found in a thoughtful glance, a curious mind, a calm presence, and the quiet confidence of someone who knows there is still so much to discover.</p>
-                    <p><span class="franz-highlight">Franz</span> has always carried her own kind of magic—reserved, observant, intelligent, and quietly captivating.</p>
-                    <p>Now, at eighteen, she stands at the beginning of a new chapter filled with possibilities. New places. New dreams. New adventures.</p>
-                </div>
-            </div>
-
-            <!-- PAGE 3: SORTING CEREMONY -->
-            <div class="page" id="page-2">
-                <div class="chapter-number">CHAPTER III</div>
                 <div class="chapter-title">The Sorting Ceremony</div>
                 <p style="font-weight: 600; font-size: 1.05rem; color: var(--ink-sub);">Before you enter the Great Hall, the Sorting Hat would like to know...</p>
                 <div class="chapter-subtitle" style="color: var(--deep-burgundy);">Where does your magic belong?</div>
@@ -738,62 +738,55 @@
                 </div>
             </div>
 
-            <!-- PAGE 4: THE GREAT HALL NAVIGATION HUB -->
-            <div class="page" id="page-3">
-                <div class="chapter-number">CHAPTER IV</div>
-                <div class="chapter-title">The Great Hall</div>
+            <!-- PAGE 3: MAIN MENU HUB (DYNAMIC HOUSE THEMED) -->
+            <div class="page" id="page-2">
+                <div class="chapter-number">CHAPTER III</div>
+                <div class="chapter-title" id="hub-title">THE GREAT HALL</div>
                 <div class="chapter-subtitle">Franz's 18th Birthday Celebration</div>
-                <p style="letter-spacing: 2px; font-size: 1.1rem; color: var(--deep-burgundy); font-weight: bold;">SEPTEMBER 27 · 6:00 PM</p>
 
                 <div class="hub-navigation">
-                    <div class="hub-btn" onclick="goToPage(1)">HER STORY</div>
-                    <div class="hub-btn" onclick="goToPage(4)">THE 18s</div>
-                    <div class="hub-btn" onclick="goToPage(7)">CELEBRATION</div>
-                    <div class="hub-btn" onclick="goToPage(8)">THE CASTLE</div>
+                    <div class="hub-btn" id="btn-18s" onclick="selectHubOption('18s', 3)">THE 18s ✦</div>
+                    <div class="hub-btn disabled" id="btn-evening" onclick="selectHubOption('evening', 4)">THE EVENING ✦</div>
+                    <div class="hub-btn disabled" id="btn-dress" onclick="selectHubOption('dress', 5)">DRESS CODE & MAP ✦</div>
+                    <div class="hub-btn disabled" id="btn-rsvp" onclick="selectHubOption('rsvp', 6)">RSVP ✦</div>
                 </div>
             </div>
 
-            <!-- PAGE 5: XVIII ROSES -->
+            <!-- PAGE 4: SCROLLABLE 18s PAGE (ROSES, CANDLES, TOKENS) -->
+            <div class="page" id="page-3">
+                <div class="chapter-number">CHAPTER IV</div>
+                <div class="chapter-title">The 18s Traditions</div>
+                <p style="text-align: center; color: var(--ink-sub); font-size: 0.95rem; font-weight: 600;">Scroll down to explore Franz's XVIII Roses, Candles, and Tokens.</p>
+
+                <div class="eighteens-scroll-container">
+                    <div class="section-divider-title">🌹 XVIII ROSES</div>
+                    <div class="eighteens-grid" id="roses-grid"></div>
+
+                    <div class="section-divider-title">🕯️ XVIII CANDLES</div>
+                    <div class="eighteens-grid" id="candles-grid"></div>
+
+                    <div class="section-divider-title">✨ XVIII TOKENS</div>
+                    <div class="eighteens-grid" id="bills-grid"></div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: THE EVENING (PROGRAM & HIGHLIGHTED DETAILS) -->
             <div class="page" id="page-4">
                 <div class="chapter-number">CHAPTER V</div>
-                <div class="chapter-title">XVIII Roses</div>
-                <div class="chapter-subtitle">The Garden of Eighteen</div>
-                <p style="max-width: 600px; text-align: center; color: var(--ink-sub); font-size: 1rem; font-weight: 600;">Eighteen roses for eighteen wishes. Tap any rose to reveal its wish.</p>
+                <div class="chapter-title">The Evening</div>
+                <div class="chapter-subtitle">Program & Event Details</div>
 
-                <div class="eighteens-grid" id="roses-grid"></div>
-            </div>
-
-            <!-- PAGE 6: XVIII CANDLES -->
-            <div class="page" id="page-5">
-                <div class="chapter-number">CHAPTER VI</div>
-                <div class="chapter-title">XVIII Candles</div>
-                <div class="chapter-subtitle">The Chamber of Light</div>
-                <p style="max-width: 600px; text-align: center; color: var(--ink-sub); font-size: 1rem; font-weight: 600;">Eighteen lights to guide Franz into the next chapter of her life.</p>
-
-                <div class="eighteens-grid" id="candles-grid"></div>
-            </div>
-
-            <!-- PAGE 7: XVIII BILLS -->
-            <div class="page" id="page-6">
-                <div class="chapter-number">CHAPTER VII</div>
-                <div class="chapter-title">XVIII Tokens</div>
-                <div class="chapter-subtitle">The Vault of Fortune</div>
-                <p style="max-width: 600px; text-align: center; color: var(--ink-sub); font-size: 1rem; font-weight: 600;">Eighteen tokens of prosperity for the journey ahead.</p>
-
-                <div class="eighteens-grid" id="bills-grid"></div>
-            </div>
-
-            <!-- PAGE 8: TONIGHT'S CELEBRATION -->
-            <div class="page" id="page-7">
-                <div class="chapter-number">CHAPTER VIII</div>
-                <div class="chapter-title">The Evening's Chapters</div>
-                <div class="chapter-subtitle">Program Schedule</div>
+                <div class="event-highlights-box">
+                    <div class="highlight-title">✨ DATE & TIME ✨</div>
+                    <div class="highlight-detail">SUNDAY · SEPTEMBER 27, 2026 · 6:00 PM</div>
+                    <div class="highlight-title" style="margin-top: 15px;">🏰 VENUE</div>
+                    <div class="highlight-detail" style="color: #fff;">FELICIDAD MANSION</div>
+                </div>
 
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-time">6:00 PM</div>
                         <div class="timeline-title">The Great Hall Opens</div>
-                        <div style="font-size: 0.9rem; color: var(--ink-sub);">Guests arrive and enter the celebration.</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-time">6:30 PM</div>
@@ -802,54 +795,59 @@
                     <div class="timeline-item">
                         <div class="timeline-time">7:30 PM</div>
                         <div class="timeline-title">The 18s Ceremony</div>
-                        <div style="font-size: 0.9rem; color: var(--ink-sub);">Roses · Candles · Treasures</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-time">8:30 PM</div>
-                        <div class="timeline-title">The Feast</div>
+                        <div class="timeline-title">The Feast & Dancing</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PAGE 9: VENUE & DRESS CODE -->
-            <div class="page" id="page-8">
-                <div class="chapter-number">CHAPTER IX</div>
-                <div class="chapter-title">The Castle Awaits</div>
-                <div class="chapter-subtitle">Felicidad Mansion · Dress Code</div>
+            <!-- PAGE 6: DRESS CODE & MAP -->
+            <div class="page" id="page-5">
+                <div class="chapter-number">CHAPTER VI</div>
+                <div class="chapter-title">Dress Code & Map</div>
+                <div class="chapter-subtitle">Wizarding Attire & Venue Location</div>
 
-                <div class="venue-gallery">
-                    <div class="gallery-item">THE CASTLE</div>
-                    <div class="gallery-item">GREAT HALL</div>
-                    <div class="gallery-item">GARDENS</div>
+                <div class="dress-code-highlight-box">
+                    <div style="font-family: var(--font-hp-title); color: var(--gold-bright); font-size: 1.3rem; margin-bottom: 10px;">🪄 DRESS CODE HIGHLIGHT</div>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;">Guests are requested to wear elegant formal attire.</p>
+                    
+                    <div class="swatch-container">
+                        <div class="swatch">
+                            <div class="swatch-circle" style="background: #FFFFFF;"></div>
+                            <span>WHITE ATTIRE (GUESTS)</span>
+                        </div>
+                        <div class="swatch">
+                            <div class="swatch-circle" style="background: var(--franz-lavender-glow);"></div>
+                            <span style="color: var(--gold-bright);">LAVENDER (RESERVED FOR FRANZ)</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="swatch-container">
-                    <div class="swatch">
-                        <div class="swatch-circle" style="background: #FFFFFF;"></div>
-                        <span style="color: #111;">WHITE (GUESTS)</span>
-                    </div>
-                    <div class="swatch">
-                        <div class="swatch-circle" style="background: var(--franz-lavender-glow);"></div>
-                        <span style="color: var(--franz-lavender); font-weight: 900;">LAVENDER (FRANZ)</span>
-                    </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <p style="font-weight: bold; font-size: 1.1rem; color: var(--ink-black);">FELICIDAD MANSION</p>
+                    <p style="font-size: 0.9rem; color: var(--ink-sub);">#2 Baler Street corner Roosevelt Avenue, Quezon City</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn-gold">OPEN GOOGLE MAPS 🗺️</a>
                 </div>
             </div>
 
-            <!-- PAGE 10: RSVP & FINAL CHAPTER -->
-            <div class="page" id="page-9">
-                <div class="chapter-number">CHAPTER X</div>
+            <!-- PAGE 7: RSVP -->
+            <div class="page" id="page-6">
+                <div class="chapter-number">CHAPTER VII</div>
                 <div class="chapter-title">Send Your Owl</div>
-                <div class="chapter-subtitle">The Castle Awaits Your Answer</div>
+                <div class="chapter-subtitle">The Castle Awaits Your Response</div>
+                <p style="margin-bottom: 25px; text-align: center; font-size: 1.1rem; font-weight: 600;">Will you join Franz for her eighteenth chapter?</p>
 
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 35px;">
                     <a href="https://forms.google.com" target="_blank" class="btn-gold">I'LL BE THERE ✦</a>
                     <a href="https://forms.google.com" target="_blank" class="btn-gold" style="background: rgba(80, 20, 30, 0.9); border-color: var(--deep-burgundy);">SEND REGRETS ✦</a>
                 </div>
 
                 <div style="border-top: 2px dashed var(--deep-burgundy); padding-top: 20px; text-align: center;">
-                    <div style="font-family: var(--font-hp-title); font-size: 2rem; color: var(--royal-blue); letter-spacing: 4px;">FRANZ XVIII</div>
-                    <p style="font-family: var(--font-parchment); font-size: 1.5rem; color: var(--franz-lavender); margin-top: 5px; font-weight: bold;">The adventure begins.</p>
-                    <div style="margin-top: 15px; font-family: var(--font-hp-title); font-size: 0.85rem; letter-spacing: 4px; color: var(--deep-burgundy);">✦ MISCHIEF MANAGED ✦</div>
+                    <div style="font-family: var(--font-hp-title); font-size: 2.2rem; color: var(--royal-blue); letter-spacing: 4px;">FRANZ XVIII</div>
+                    <p style="font-family: var(--font-parchment); font-size: 1.6rem; color: var(--franz-lavender); margin-top: 5px; font-weight: bold;">The adventure begins.</p>
+                    <div style="margin-top: 15px; font-family: var(--font-hp-title); font-size: 0.9rem; letter-spacing: 4px; color: var(--deep-burgundy);">✦ MISCHIEF MANAGED ✦</div>
                 </div>
             </div>
 
@@ -868,20 +866,16 @@
     </div>
 
     <script>
-        /* Video Intro Timing Logic (10.0-second delay for Open Invitation button) */
+        /* Video Intro Timing Logic: Pauses automatically at exactly 10.0 seconds */
         const video = document.getElementById('bg-video');
         const openBtn = document.getElementById('open-btn');
 
         video.addEventListener('timeupdate', () => {
             if (video.currentTime >= 10.0) {
+                video.pause();
                 openBtn.classList.add('visible');
             }
         });
-
-        // Fallback timeout in case timeupdate trigger is missed
-        setTimeout(() => {
-            openBtn.classList.add('visible');
-        }, 10000);
 
         function enterInvitation() {
             const overlay = document.getElementById('video-intro-overlay');
@@ -889,9 +883,49 @@
             
             overlay.style.opacity = '0';
             overlay.style.visibility = 'hidden';
-            video.pause();
-            
             audio.play().catch(() => {});
+        }
+
+        /* Sorting Hat & Dynamic House Background Logic */
+        const houses = [
+            { 
+                name: "GRYFFINDOR", 
+                quote: "Where dwell the brave at heart, their daring, nerve, and chivalry set Gryffindors apart.",
+                primary: "#740001", accent: "#d3a625", glow: "rgba(116, 0, 1, 0.4)"
+            },
+            { 
+                name: "RAVENCLAW", 
+                quote: "Wit beyond measure is man's greatest treasure.",
+                primary: "#0e1a40", accent: "#946b2d", glow: "rgba(14, 26, 64, 0.4)"
+            },
+            { 
+                name: "HUFFLEPUFF", 
+                quote: "Where they are just and loyal, those patient Hufflepuffs are true and unafraid of toil.",
+                primary: "#ecb939", accent: "#372e29", glow: "rgba(236, 185, 57, 0.4)"
+            },
+            { 
+                name: "SLYTHERIN", 
+                quote: "Or perhaps in Slytherin you'll make your real friends, those cunning folk use any means to achieve their ends.",
+                primary: "#1a472a", accent: "#aaaaaa", glow: "rgba(26, 71, 42, 0.4)"
+            }
+        ];
+
+        let selectedHouse = null;
+
+        function sortGuest() {
+            const resultBox = document.getElementById('sorting-result');
+            const houseName = document.getElementById('house-name');
+            const houseQuote = document.getElementById('house-quote');
+            
+            selectedHouse = houses[Math.floor(Math.random() * houses.length)];
+            
+            houseName.innerText = `WELCOME TO ${selectedHouse.name}`;
+            houseQuote.innerText = `"${selectedHouse.quote}"`;
+            resultBox.style.display = 'block';
+
+            // Apply house colors to Chapter III Hub Title and Theme
+            document.getElementById('hub-title').innerText = `${selectedHouse.name} HALL`;
+            document.getElementById('hub-title').style.color = selectedHouse.primary;
         }
 
         /* Page Turning System */
@@ -909,12 +943,16 @@
                 }
             });
 
-            // Update nav arrows
             document.getElementById('prev-btn').classList.toggle('disabled', currentPage === 0);
             document.getElementById('next-btn').classList.toggle('disabled', currentPage === totalPages - 1);
         }
 
         function changePage(direction) {
+            // If leaving page 3 (18s), return to Menu Hub (page 2)
+            if (currentPage === 3 && direction === 1) {
+                goToPage(2);
+                return;
+            }
             if (currentPage + direction >= 0 && currentPage + direction < totalPages) {
                 currentPage += direction;
                 updatePageDisplay();
@@ -928,29 +966,25 @@
             }
         }
 
-        /* Touch Swipe Support for Turning Pages */
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, false);
+        /* Sequential Menu Hub State Management */
+        const hubState = { '18s': false, 'evening': false, 'dress': false };
 
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, false);
+        function selectHubOption(optionKey, targetPageIndex) {
+            const btn = document.getElementById(`btn-${optionKey}`);
+            if (btn.classList.contains('disabled')) return;
 
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                changePage(1); // Swipe left -> Next Page
-            }
-            if (touchEndX > touchStartX + 50) {
-                changePage(-1); // Swipe right -> Previous Page
-            }
+            hubState[optionKey] = true;
+            btn.classList.add('completed');
+
+            // Unlock next options sequentially
+            if (optionKey === '18s') document.getElementById('btn-evening').classList.remove('disabled');
+            if (optionKey === 'evening') document.getElementById('btn-dress').classList.remove('disabled');
+            if (optionKey === 'dress') document.getElementById('btn-rsvp').classList.remove('disabled');
+
+            goToPage(targetPageIndex);
         }
 
-        /* 18s Dynamic Grid Generator */
+        /* 18s Dynamic Grid Generators */
         const rosesData = ["Alexander Reyes", "Miguel Santos", "Nathaniel Cruz", "Adrian Flores", "Gabriel Mendoza", "Lucas Navarro", "Daniel Castillo", "Ethan Ramirez", "Matteo Garcia", "Sebastian Torres", "Rafael Dela Cruz", "Christian Villanueva", "Enzo Bautista", "Julian Aquino", "Marco Fernandez", "Andrei Santiago", "Nicholas Rivera", "Leonardo Garcia"];
         const candlesData = ["Sophia Reyes", "Isabella Santos", "Ariana Cruz", "Mia Flores", "Chloe Mendoza", "Amelia Navarro", "Samantha Castillo", "Julia Ramirez", "Camille Garcia", "Bianca Torres", "Natalie Dela Cruz", "Clarisse Villanueva", "Gabrielle Bautista", "Kyla Aquino", "Nicole Fernandez", "Danielle Santiago", "Victoria Rivera", "Althea Garcia"];
         const billsData = ["Marcus Reyes", "Joshua Santos", "Liam Cruz", "Andrew Flores", "Caleb Mendoza", "Matthew Navarro", "James Castillo", "Aaron Ramirez", "Nathan Garcia", "Dominic Torres", "Kyle Dela Cruz", "Vincent Villanueva", "Patrick Bautista", "Sean Aquino", "Jerome Fernandez", "Kevin Santiago", "Ryan Rivera", "Gabriel Garcia"];
@@ -976,25 +1010,6 @@
         createGrid('candles-grid', candlesData, '🕯️', 'XVIII CANDLES');
         createGrid('bills-grid', billsData, '✨', 'XVIII TOKENS');
 
-        /* Sorting Hat Logic */
-        const houses = [
-            { name: "GRYFFINDOR", quote: "Where dwell the brave at heart, their daring, nerve, and chivalry set Gryffindors apart." },
-            { name: "RAVENCLAW", quote: "Wit beyond measure is man's greatest treasure." },
-            { name: "HUFFLEPUFF", quote: "Where they are just and loyal, those patient Hufflepuffs are true and unafraid of toil." },
-            { name: "SLYTHERIN", quote: "Or perhaps in Slytherin you'll make your real friends, those cunning folk use any means to achieve their ends." }
-        ];
-
-        function sortGuest() {
-            const resultBox = document.getElementById('sorting-result');
-            const houseName = document.getElementById('house-name');
-            const houseQuote = document.getElementById('house-quote');
-            const randomHouse = houses[Math.floor(Math.random() * houses.length)];
-            
-            houseName.innerText = `WELCOME TO ${randomHouse.name}`;
-            houseQuote.innerText = `"${randomHouse.quote}"`;
-            resultBox.style.display = 'block';
-        }
-
         /* Modal Popup Logic */
         function openModal(tagline, title, subtitle, message) {
             document.getElementById('modal-tagline').innerText = tagline;
@@ -1008,34 +1023,17 @@
             document.getElementById('modal-overlay').style.display = 'none';
         }
 
-        /* Ambient Dust Particle Canvas */
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        const particles = Array.from({ length: 40 }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 1.8 + 0.5,
-            alpha: Math.random() * 0.5,
-            speed: Math.random() * 0.3 + 0.1
-        }));
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(198, 156, 58, ${p.alpha})`;
-                ctx.fill();
-                p.y -= p.speed;
-                if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
-            });
-            requestAnimationFrame(animateParticles);
+        function toggleAudio() {
+            const audio = document.getElementById('bg-audio');
+            const btn = document.getElementById('audio-btn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "🔊 ATMOSPHERE ON";
+            } else {
+                audio.pause();
+                btn.innerText = "🔇 ATMOSPHERE OFF";
+            }
         }
-        animateParticles();
     </script>
 </body>
 </html>
