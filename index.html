@@ -39,13 +39,13 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Lock scroll for book page-turning */
+            overflow: hidden; /* Lock window scroll for book page-turning */
             background-color: var(--midnight-dark);
             font-family: var(--font-body);
             color: var(--ink-black);
         }
 
-        /* Ambient Background Canvas */
+        /* Ambient Parchment Background Canvas */
         .parchment-viewport {
             position: fixed;
             top: 0;
@@ -54,7 +54,7 @@
             height: 100vh;
             background-image: url('background.jpeg');
             background-size: cover;
-            background-position: center;
+            background-position: center top;
             z-index: 1;
         }
 
@@ -71,10 +71,11 @@
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
-            padding-bottom: 60px;
+            padding-bottom: 50px;
             transition: opacity 1.2s ease, visibility 1.2s ease;
         }
 
+        /* Prevent Video Zooming/Cropping on Mobile Screens */
         #bg-video {
             position: absolute;
             top: 0;
@@ -83,6 +84,13 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            #bg-video {
+                object-fit: contain; /* Shows full video without zooming in on mobile */
+                background: #000;
+            }
         }
 
         .video-shade {
@@ -105,17 +113,17 @@
         /* Lowkey Music Toggle Button */
         .intro-music-btn {
             position: absolute;
-            bottom: 25px;
-            right: 20px;
+            bottom: 20px;
+            right: 15px;
             z-index: 4;
-            background: rgba(10, 8, 6, 0.65);
-            border: 1px solid rgba(198, 156, 58, 0.5);
-            color: rgba(243, 207, 122, 0.85);
-            padding: 6px 12px;
+            background: rgba(10, 8, 6, 0.75);
+            border: 1px solid rgba(198, 156, 58, 0.6);
+            color: rgba(243, 207, 122, 0.9);
+            padding: 5px 12px;
             border-radius: 20px;
             cursor: pointer;
             font-family: var(--font-serif);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             letter-spacing: 1px;
             backdrop-filter: blur(4px);
@@ -123,7 +131,7 @@
         }
 
         .intro-music-btn:hover {
-            background: rgba(198, 156, 58, 0.8);
+            background: rgba(198, 156, 58, 0.85);
             color: #000;
             border-color: var(--gold-bright);
         }
@@ -135,8 +143,8 @@
             outline: none;
             font-family: var(--font-handwritten);
             color: var(--gold-bright);
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            letter-spacing: 3px;
+            font-size: clamp(1.6rem, 5.5vw, 2.4rem);
+            letter-spacing: 2px;
             cursor: pointer;
             text-shadow: 0 0 12px var(--gold-glow), 0 0 25px rgba(243, 207, 122, 0.8), 2px 2px 5px rgba(0,0,0,0.9);
             opacity: 0;
@@ -158,22 +166,22 @@
             50% { text-shadow: 0 0 25px var(--gold-bright), 0 0 45px rgba(243, 207, 122, 1); }
         }
 
-        /* Ambient Audio Floating Control */
+        /* Ambient Audio Floating Control (Bottom Right of Background) */
         .audio-control {
             position: fixed;
-            bottom: 15px;
-            right: 15px;
+            bottom: 12px;
+            right: 12px;
             z-index: 2500;
-            background: rgba(20, 13, 7, 0.9);
+            background: rgba(20, 13, 7, 0.92);
             border: 1.5px solid var(--antique-gold);
             color: var(--gold-bright);
-            padding: 8px 14px;
-            border-radius: 30px;
+            padding: 6px 12px;
+            border-radius: 20px;
             cursor: pointer;
             font-family: var(--font-serif);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
-            box-shadow: 0 0 12px rgba(0,0,0,0.7);
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
 
         /* Book Structure */
@@ -192,9 +200,8 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            padding: clamp(30px, 5vh, 60px) clamp(20px, 4vw, 40px);
             box-sizing: border-box;
             opacity: 0;
             visibility: hidden;
@@ -217,25 +224,44 @@
             visibility: hidden;
         }
 
+        /* PARCHMENT INNER CONTAINER - Aligns Content Strictly Inside the Scroll Graphic */
+        .parchment-content-box {
+            width: clamp(260px, 68vw, 520px);
+            margin-top: clamp(23vh, 28vh, 32vh);
+            max-height: clamp(42vh, 48vh, 52vh);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 5px 8px;
+            box-sizing: border-box;
+        }
+
+        /* Custom Scrollbar for Inner Content */
+        .parchment-content-box::-webkit-scrollbar { width: 4px; }
+        .parchment-content-box::-webkit-scrollbar-track { background: rgba(20, 13, 7, 0.1); }
+        .parchment-content-box::-webkit-scrollbar-thumb { background: var(--antique-gold); border-radius: 3px; }
+
         /* Navigation Arrows */
         .nav-arrow {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
             z-index: 2000;
-            background: rgba(20, 13, 7, 0.85);
-            border: 2px solid var(--antique-gold);
+            background: rgba(20, 13, 7, 0.88);
+            border: 1.5px solid var(--antique-gold);
             color: var(--gold-bright);
-            width: clamp(42px, 10vw, 55px);
-            height: clamp(42px, 10vw, 55px);
+            width: clamp(36px, 8vw, 48px);
+            height: clamp(36px, 8vw, 48px);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             cursor: pointer;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 15px rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 12px rgba(0,0,0,0.7);
             transition: all 0.3s ease;
             user-select: none;
         }
@@ -243,120 +269,120 @@
         .nav-arrow:hover {
             background: var(--antique-gold);
             color: #000;
-            box-shadow: 0 0 25px var(--gold-bright);
+            box-shadow: 0 0 20px var(--gold-bright);
         }
 
-        .nav-arrow.left { left: clamp(8px, 2vw, 20px); }
-        .nav-arrow.right { right: clamp(8px, 2vw, 20px); }
+        .nav-arrow.left { left: clamp(4px, 1.5vw, 15px); }
+        .nav-arrow.right { right: clamp(4px, 1.5vw, 15px); }
         .nav-arrow.disabled { opacity: 0.2; pointer-events: none; }
 
-        /* Typography (Fluid Font Sizes) */
+        /* Fluid Typography (Fits Inside Scroll Width) */
         .chapter-number {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
-            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-            letter-spacing: 3px;
+            font-size: clamp(0.75rem, 2vw, 0.95rem);
+            letter-spacing: 2px;
             font-weight: 900;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .chapter-title {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
-            font-size: clamp(1.5rem, 5vw, 2.4rem);
+            font-size: clamp(1.1rem, 3.8vw, 1.8rem);
             font-weight: 900;
             text-align: center;
-            margin-bottom: 6px;
-            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             line-height: 1.25;
+            word-wrap: break-word;
         }
 
         .chapter-subtitle {
             font-family: var(--font-handwritten);
             color: var(--ink-sub);
-            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            font-size: clamp(0.95rem, 2.8vw, 1.3rem);
             text-align: center;
-            margin-bottom: clamp(15px, 3vh, 25px);
+            margin-bottom: 12px;
             font-weight: bold;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .btn-gold {
             background: #140d07;
-            border: 2px solid var(--antique-gold);
+            border: 1.5px solid var(--antique-gold);
             color: var(--gold-bright);
-            padding: clamp(10px, 2.5vh, 14px) clamp(24px, 5vw, 35px);
+            padding: clamp(8px, 1.8vh, 12px) clamp(18px, 4vw, 28px);
             font-family: var(--font-serif);
             font-weight: 700;
-            font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-            letter-spacing: 1.5px;
+            font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 15px;
+            margin-top: 10px;
             text-decoration: none;
             display: inline-block;
             border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.6);
         }
 
         .btn-gold:hover {
             background: var(--antique-gold);
             color: #000;
-            box-shadow: 0 0 25px var(--gold-bright);
+            box-shadow: 0 0 20px var(--gold-bright);
         }
 
         /* PAGE 1 — INVITATION */
         .invitation-name {
             font-family: var(--font-hp-title);
-            font-size: clamp(2.3rem, 9vw, 3.8rem);
+            font-size: clamp(1.8rem, 6.5vw, 2.8rem);
             color: var(--royal-blue);
-            letter-spacing: clamp(3px, 1vw, 6px);
-            margin: 6px 0;
+            letter-spacing: clamp(2px, 0.8vw, 4px);
+            margin: 4px 0;
             line-height: 1.1;
         }
 
         .invitation-age {
             font-family: var(--font-handwritten);
-            font-size: clamp(1.5rem, 5vw, 2.3rem);
+            font-size: clamp(1.2rem, 3.8vw, 1.8rem);
             color: var(--deep-burgundy);
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             font-weight: bold;
         }
 
         .details-line {
-            width: clamp(150px, 50vw, 250px);
-            height: 2px;
+            width: clamp(120px, 40vw, 200px);
+            height: 1.5px;
             background: var(--deep-burgundy);
-            margin: 15px auto;
+            margin: 10px auto;
             opacity: 0.6;
         }
 
         /* PAGE 2 — SORTING CEREMONY */
         .sorting-hat-btn {
-            font-size: clamp(3.5rem, 12vw, 5rem);
+            font-size: clamp(2.8rem, 9vw, 4rem);
             cursor: pointer;
-            margin: 10px 0;
+            margin: 6px 0;
             transition: transform 0.3s ease;
             user-select: none;
-            filter: drop-shadow(0 0 15px var(--antique-gold));
+            filter: drop-shadow(0 0 10px var(--antique-gold));
         }
 
-        .sorting-hat-btn:hover { transform: scale(1.15) rotate(-5deg); }
+        .sorting-hat-btn:hover { transform: scale(1.1) rotate(-5deg); }
 
         .houses-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            max-width: 850px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .house-card {
-            border: 1.5px solid var(--antique-gold);
-            padding: clamp(12px, 2vh, 20px) 8px;
-            border-radius: 6px;
+            border: 1px solid var(--antique-gold);
+            padding: 8px 4px;
+            border-radius: 4px;
             background: rgba(15, 10, 6, 0.92);
             color: #fff;
             text-align: center;
@@ -368,15 +394,15 @@
         .house-card.slytherin { border-color: #16a34a; background: rgba(10, 45, 25, 0.92); }
 
         .sorting-result {
-            margin-top: 15px;
-            padding: 15px;
-            border: 2px double var(--antique-gold);
+            margin-top: 10px;
+            padding: 10px;
+            border: 1.5px double var(--antique-gold);
             background: rgba(15, 10, 6, 0.95);
             color: #fff;
             display: none;
-            border-radius: 6px;
-            box-shadow: 0 0 20px var(--gold-glow);
-            max-width: 550px;
+            border-radius: 4px;
+            box-shadow: 0 0 15px var(--gold-glow);
+            width: 100%;
             text-align: center;
         }
 
@@ -384,32 +410,31 @@
         .hub-navigation {
             display: flex;
             flex-direction: column;
-            gap: clamp(8px, 1.8vh, 12px);
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 10px;
             width: 100%;
-            max-width: 400px;
         }
 
         .hub-btn {
             background: #140d07;
             border: 1.5px solid var(--antique-gold);
             color: var(--gold-bright);
-            padding: clamp(12px, 2vh, 16px) clamp(15px, 4vw, 25px);
+            padding: clamp(8px, 1.8vh, 12px) 12px;
             text-align: center;
             font-family: var(--font-serif);
-            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+            font-size: clamp(0.75rem, 2.2vw, 0.85rem);
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
             border-radius: 4px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.5);
         }
 
         .hub-btn:hover:not(.disabled) {
             background: var(--antique-gold);
             color: #000;
-            box-shadow: 0 0 20px var(--gold-bright);
+            box-shadow: 0 0 15px var(--gold-bright);
         }
 
         .hub-btn.disabled {
@@ -427,38 +452,26 @@
         }
 
         /* PAGE 4 — SCROLLABLE 18s */
-        .eighteens-scroll-container {
-            width: 100%;
-            max-width: 850px;
-            height: clamp(50vh, 58vh, 65vh);
-            overflow-y: auto;
-            padding-right: 8px;
-            margin-top: 10px;
-        }
-
-        .eighteens-scroll-container::-webkit-scrollbar { width: 5px; }
-        .eighteens-scroll-container::-webkit-scrollbar-track { background: rgba(20, 13, 7, 0.2); border-radius: 4px; }
-        .eighteens-scroll-container::-webkit-scrollbar-thumb { background: var(--antique-gold); border-radius: 4px; }
-
         .section-divider-title {
             font-family: var(--font-hp-title);
             color: var(--deep-burgundy);
-            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
-            margin: 20px 0 10px 0;
-            border-bottom: 2px solid var(--deep-burgundy);
-            padding-bottom: 4px;
+            font-size: clamp(0.9rem, 2.8vw, 1.1rem);
+            margin: 12px 0 8px 0;
+            border-bottom: 1.5px solid var(--deep-burgundy);
+            padding-bottom: 2px;
+            width: 100%;
         }
 
         .eighteens-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
             width: 100%;
         }
 
         .eighteen-item {
             background: rgba(20, 13, 7, 0.92);
-            border: 1.5px solid var(--antique-gold);
+            border: 1px solid var(--antique-gold);
             aspect-ratio: 1;
             display: flex;
             flex-direction: column;
@@ -466,15 +479,15 @@
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            border-radius: 4px;
-            padding: 3px;
+            border-radius: 3px;
+            padding: 2px;
             text-align: center;
         }
 
         .eighteen-item:hover {
             border-color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 0 12px var(--gold-bright);
+            box-shadow: 0 0 10px var(--gold-bright);
             background: var(--antique-gold);
         }
 
@@ -483,83 +496,80 @@
 
         .eighteen-number {
             font-family: var(--font-serif);
-            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-size: clamp(0.6rem, 1.6vw, 0.7rem);
             font-weight: 900;
             color: var(--gold-bright);
         }
 
-        .eighteen-icon { font-size: clamp(1rem, 3vw, 1.2rem); margin: 1px 0; }
-        .eighteen-name { font-size: clamp(0.6rem, 1.8vw, 0.7rem); font-weight: 700; color: #f5efe6; word-break: break-word; }
+        .eighteen-icon { font-size: clamp(0.85rem, 2.2vw, 1rem); margin: 1px 0; }
+        .eighteen-name { font-size: clamp(0.55rem, 1.5vw, 0.65rem); font-weight: 700; color: #f5efe6; word-break: break-word; }
 
         /* PAGE 5 — THE EVENING */
         .event-highlights-box {
             background: rgba(20, 13, 7, 0.92);
-            border: 2px double var(--antique-gold);
-            padding: clamp(15px, 3vh, 25px) clamp(15px, 4vw, 35px);
-            border-radius: 6px;
+            border: 1.5px double var(--antique-gold);
+            padding: 10px 12px;
+            border-radius: 4px;
             text-align: center;
             color: #fff;
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px var(--gold-glow);
+            margin-bottom: 12px;
+            box-shadow: 0 0 15px var(--gold-glow);
             width: 100%;
-            max-width: 600px;
         }
 
-        .highlight-title { font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(0.95rem, 3vw, 1.2rem); margin-bottom: 3px; }
-        .highlight-detail { font-family: var(--font-serif); font-size: clamp(0.9rem, 2.8vw, 1.1rem); font-weight: bold; color: var(--gold-bright); }
+        .highlight-title { font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(0.8rem, 2.4vw, 0.95rem); margin-bottom: 2px; }
+        .highlight-detail { font-family: var(--font-serif); font-size: clamp(0.75rem, 2.2vw, 0.9rem); font-weight: bold; color: var(--gold-bright); }
 
-        .timeline { max-width: 600px; width: 100%; border-left: 2px solid var(--deep-burgundy); padding-left: 20px; text-align: left; }
-        .timeline-item { margin-bottom: 12px; position: relative; }
+        .timeline { width: 100%; border-left: 2px solid var(--deep-burgundy); padding-left: 15px; text-align: left; }
+        .timeline-item { margin-bottom: 8px; position: relative; }
         .timeline-item::before {
-            content: ''; position: absolute; left: -26px; top: 4px; width: 10px; height: 10px;
-            border-radius: 50%; background: var(--antique-gold); border: 2px solid var(--deep-burgundy);
+            content: ''; position: absolute; left: -20px; top: 4px; width: 8px; height: 8px;
+            border-radius: 50%; background: var(--antique-gold); border: 1.5px solid var(--deep-burgundy);
         }
 
-        .timeline-time { font-family: var(--font-hp-title); color: var(--deep-burgundy); font-size: clamp(0.8rem, 2.5vw, 0.95rem); font-weight: 700; }
-        .timeline-title { font-family: var(--font-serif); font-size: clamp(0.95rem, 3vw, 1.15rem); font-weight: 900; color: var(--ink-black); }
+        .timeline-time { font-family: var(--font-hp-title); color: var(--deep-burgundy); font-size: clamp(0.7rem, 2vw, 0.8rem); font-weight: 700; }
+        .timeline-title { font-family: var(--font-serif); font-size: clamp(0.8rem, 2.4vw, 0.95rem); font-weight: 900; color: var(--ink-black); }
 
         /* PAGE 6 — DRESS CODE & MAP */
         .dress-code-highlight-box {
             background: rgba(10, 15, 25, 0.95);
-            border: 2px double var(--gold-bright);
-            padding: clamp(15px, 3vh, 25px);
-            border-radius: 6px;
+            border: 1.5px double var(--gold-bright);
+            padding: 10px;
+            border-radius: 4px;
             color: #fff;
             text-align: center;
-            box-shadow: 0 0 25px var(--gold-glow);
-            max-width: 650px;
+            box-shadow: 0 0 15px var(--gold-glow);
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
-        .swatch-container { display: flex; justify-content: center; gap: clamp(15px, 5vw, 40px); margin-top: 15px; }
-        .swatch { display: flex; flex-direction: column; align-items: center; font-size: clamp(0.7rem, 2vw, 0.85rem); font-weight: bold; }
-        .swatch-circle { width: clamp(40px, 10vw, 55px); height: clamp(40px, 10vw, 55px); border-radius: 50%; margin-bottom: 6px; border: 2px solid var(--antique-gold); box-shadow: 0 0 12px rgba(255,255,255,0.4); }
+        .swatch-container { display: flex; justify-content: center; gap: 15px; margin-top: 8px; }
+        .swatch { display: flex; flex-direction: column; align-items: center; font-size: clamp(0.6rem, 1.8vw, 0.75rem); font-weight: bold; }
+        .swatch-circle { width: clamp(30px, 8vw, 42px); height: clamp(30px, 8vw, 42px); border-radius: 50%; margin-bottom: 4px; border: 1.5px solid var(--antique-gold); }
 
         /* PAGE 7 — HARRY POTTER MOVING PORTRAIT GALLERY */
         .moving-gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 6px;
             width: 100%;
-            max-width: 850px;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .portrait-frame {
-            border: 5px solid #3d2a17;
-            outline: 1.5px solid var(--antique-gold);
+            border: 3px solid #3d2a17;
+            outline: 1px solid var(--antique-gold);
             background: #0d0905;
-            padding: 6px;
-            border-radius: 4px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+            padding: 3px;
+            border-radius: 3px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
             position: relative;
             overflow: hidden;
         }
 
         .moving-portrait-wrapper {
             width: 100%;
-            height: clamp(140px, 25vh, 250px);
+            height: clamp(80px, 15vh, 140px);
             border-radius: 2px;
             position: relative;
             overflow: hidden;
@@ -577,17 +587,17 @@
 
         @keyframes hogwartsLivingPortrait {
             0% { transform: scale(1) translate(0, 0) rotate(0deg); filter: sepia(0.35) contrast(1.15) brightness(0.9); }
-            33% { transform: scale(1.08) translate(-4px, -2px) rotate(1deg); filter: sepia(0.25) contrast(1.2) brightness(1.05); }
-            66% { transform: scale(1.04) translate(3px, -5px) rotate(-1deg); filter: sepia(0.4) contrast(1.1) brightness(0.85); }
+            33% { transform: scale(1.08) translate(-3px, -2px) rotate(1deg); filter: sepia(0.25) contrast(1.2) brightness(1.05); }
+            66% { transform: scale(1.04) translate(2px, -4px) rotate(-1deg); filter: sepia(0.4) contrast(1.1) brightness(0.85); }
             100% { transform: scale(1.12) translate(0, -2px) rotate(0.5deg); filter: sepia(0.3) contrast(1.25) brightness(1); }
         }
 
         .portrait-caption {
             font-family: var(--font-handwritten);
             color: var(--gold-bright);
-            font-size: clamp(0.75rem, 2.2vw, 0.95rem);
+            font-size: clamp(0.6rem, 1.8vw, 0.75rem);
             text-align: center;
-            margin-top: 6px;
+            margin-top: 3px;
             font-weight: bold;
         }
 
@@ -610,12 +620,12 @@
         .modal-card {
             background: rgba(245, 239, 230, 0.96);
             color: var(--ink-black);
-            max-width: 440px;
+            max-width: 400px;
             width: 100%;
-            padding: clamp(25px, 5vh, 40px) 20px;
+            padding: 25px 15px;
             border-radius: 6px;
             border: 2px double var(--antique-gold);
-            outline: 4px solid rgba(20, 13, 7, 0.9);
+            outline: 3px solid rgba(20, 13, 7, 0.9);
             text-align: center;
             position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.9);
@@ -623,25 +633,23 @@
 
         .close-modal {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.8rem;
+            top: 8px;
+            right: 12px;
+            font-size: 1.6rem;
             cursor: pointer;
             color: #333;
             font-weight: bold;
         }
 
-        /* Desktop Layout Scaling */
+        /* Desktop Grid Scaling */
         @media (min-width: 769px) {
             .eighteens-grid { grid-template-columns: repeat(6, 1fr); }
             .houses-grid { grid-template-columns: repeat(4, 1fr); }
-        }
-
-        /* Mobile Layout Layout Customization */
-        @media (max-width: 768px) {
-            .moving-gallery-grid { grid-template-columns: 1fr; gap: 8px; }
-            .moving-portrait-wrapper { height: 130px; }
-            .page { padding: 40px 15px; }
+            .parchment-content-box {
+                width: 480px;
+                margin-top: 24vh;
+                max-height: 52vh;
+            }
         }
     </style>
 </head>
@@ -679,77 +687,83 @@
 
             <!-- PAGE 1: THE INVITATION -->
             <div class="page active" id="page-0">
-                <div class="chapter-number">CHAPTER I</div>
-                <h2 style="font-family: var(--font-hp-title); color: var(--deep-burgundy); font-size: clamp(1.05rem, 3.5vw, 1.4rem); margin-bottom: 4px;">Hogwarts School of Witchcraft & Wizardry</h2>
-                <p style="font-size: clamp(0.75rem, 2.2vw, 0.95rem); letter-spacing: 1.5px; font-weight: bold; color: var(--ink-sub);">CORDIALLY INVITES YOU TO CELEBRATE</p>
-                <div class="invitation-name">FRANZ</div>
-                <div class="invitation-age">at Eighteen</div>
-                <p style="font-size: clamp(0.85rem, 2.5vw, 1.1rem); font-style: italic; color: var(--ink-sub); font-weight: 600;">A new chapter is about to begin.</p>
-                
-                <div class="details-line"></div>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER I</div>
+                    <h2 style="font-family: var(--font-hp-title); color: var(--deep-burgundy); font-size: clamp(0.85rem, 2.8vw, 1.2rem); margin-bottom: 3px;">Hogwarts School of Witchcraft & Wizardry</h2>
+                    <p style="font-size: clamp(0.65rem, 1.8vw, 0.8rem); letter-spacing: 1px; font-weight: bold; color: var(--ink-sub);">CORDIALLY INVITES YOU TO CELEBRATE</p>
+                    <div class="invitation-name">FRANZ</div>
+                    <div class="invitation-age">at Eighteen</div>
+                    <p style="font-size: clamp(0.75rem, 2.2vw, 0.95rem); font-style: italic; color: var(--ink-sub); font-weight: 600;">A new chapter is about to begin.</p>
+                    
+                    <div class="details-line"></div>
 
-                <div style="font-family: var(--font-serif); font-size: clamp(0.95rem, 3vw, 1.2rem); font-weight: 900; margin-bottom: 4px;">SUNDAY · OCTOBER 18, 2026</div>
-                <div style="font-family: var(--font-serif); font-size: clamp(0.85rem, 2.5vw, 1.1rem); font-weight: 700; color: var(--ink-sub);">6:00 IN THE EVENING</div>
-                <div style="font-family: var(--font-serif); font-size: clamp(0.95rem, 3vw, 1.2rem); color: var(--deep-burgundy); font-weight: 900; margin-top: 8px;">THE GRAND ASTORIA CONSERVATORY</div>
+                    <div style="font-family: var(--font-serif); font-size: clamp(0.8rem, 2.4vw, 1rem); font-weight: 900; margin-bottom: 3px;">SUNDAY · OCTOBER 18, 2026</div>
+                    <div style="font-family: var(--font-serif); font-size: clamp(0.75rem, 2vw, 0.9rem); font-weight: 700; color: var(--ink-sub);">6:00 IN THE EVENING</div>
+                    <div style="font-family: var(--font-serif); font-size: clamp(0.8rem, 2.4vw, 1rem); color: var(--deep-burgundy); font-weight: 900; margin-top: 6px;">THE GRAND ASTORIA CONSERVATORY</div>
+                </div>
             </div>
 
             <!-- PAGE 2: SORTING CEREMONY -->
             <div class="page" id="page-1">
-                <div class="chapter-number">CHAPTER II</div>
-                <div class="chapter-title">The Sorting Ceremony</div>
-                <p style="font-weight: 600; font-size: clamp(0.85rem, 2.5vw, 1.05rem); color: var(--ink-sub);">Before you enter the Great Hall, the Sorting Hat would like to know...</p>
-                <div class="chapter-subtitle" style="color: var(--deep-burgundy); margin-bottom: 10px;">Where does your magic belong?</div>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER II</div>
+                    <div class="chapter-title">The Sorting Ceremony</div>
+                    <p style="font-weight: 600; font-size: clamp(0.75rem, 2vw, 0.9rem); color: var(--ink-sub);">Before you enter the Great Hall, the Sorting Hat would like to know...</p>
+                    <div class="chapter-subtitle" style="color: var(--deep-burgundy); margin-bottom: 6px;">Where does your magic belong?</div>
 
-                <div class="sorting-hat-btn" onclick="sortGuest()">🎩</div>
-                <p style="font-size: clamp(0.7rem, 2vw, 0.85rem); letter-spacing: 1.5px; color: var(--deep-burgundy); font-weight: bold;">[ TAP THE SORTING HAT ]</p>
+                    <div class="sorting-hat-btn" onclick="sortGuest()">🎩</div>
+                    <p style="font-size: clamp(0.65rem, 1.8vw, 0.75rem); letter-spacing: 1px; color: var(--deep-burgundy); font-weight: bold;">[ TAP THE SORTING HAT ]</p>
 
-                <div class="houses-grid">
-                    <div class="house-card gryffindor">
-                        <h3 style="color: #f87171; font-family: var(--font-hp-title); font-size: clamp(0.8rem, 2.5vw, 1.1rem);">🦁 GRYFFINDOR</h3>
-                        <p style="font-size: clamp(0.65rem, 1.8vw, 0.8rem);">Courage · Bravery</p>
+                    <div class="houses-grid">
+                        <div class="house-card gryffindor">
+                            <h3 style="color: #f87171; font-family: var(--font-hp-title); font-size: clamp(0.7rem, 2vw, 0.9rem);">🦁 GRYFFINDOR</h3>
+                            <p style="font-size: clamp(0.55rem, 1.5vw, 0.7rem);">Courage · Bravery</p>
+                        </div>
+                        <div class="house-card ravenclaw">
+                            <h3 style="color: #60a5fa; font-family: var(--font-hp-title); font-size: clamp(0.7rem, 2vw, 0.9rem);">🦅 RAVENCLAW</h3>
+                            <p style="font-size: clamp(0.55rem, 1.5vw, 0.7rem);">Wisdom · Wit</p>
+                        </div>
+                        <div class="house-card hufflepuff">
+                            <h3 style="color: #facc15; font-family: var(--font-hp-title); font-size: clamp(0.7rem, 2vw, 0.9rem);">🦡 HUFFLEPUFF</h3>
+                            <p style="font-size: clamp(0.55rem, 1.5vw, 0.7rem);">Loyalty · Kindness</p>
+                        </div>
+                        <div class="house-card slytherin">
+                            <h3 style="color: #4ade80; font-family: var(--font-hp-title); font-size: clamp(0.7rem, 2vw, 0.9rem);">🐍 SLYTHERIN</h3>
+                            <p style="font-size: clamp(0.55rem, 1.5vw, 0.7rem);">Ambition · Cunning</p>
+                        </div>
                     </div>
-                    <div class="house-card ravenclaw">
-                        <h3 style="color: #60a5fa; font-family: var(--font-hp-title); font-size: clamp(0.8rem, 2.5vw, 1.1rem);">🦅 RAVENCLAW</h3>
-                        <p style="font-size: clamp(0.65rem, 1.8vw, 0.8rem);">Wisdom · Wit</p>
-                    </div>
-                    <div class="house-card hufflepuff">
-                        <h3 style="color: #facc15; font-family: var(--font-hp-title); font-size: clamp(0.8rem, 2.5vw, 1.1rem);">🦡 HUFFLEPUFF</h3>
-                        <p style="font-size: clamp(0.65rem, 1.8vw, 0.8rem);">Loyalty · Kindness</p>
-                    </div>
-                    <div class="house-card slytherin">
-                        <h3 style="color: #4ade80; font-family: var(--font-hp-title); font-size: clamp(0.8rem, 2.5vw, 1.1rem);">🐍 SLYTHERIN</h3>
-                        <p style="font-size: clamp(0.65rem, 1.8vw, 0.8rem);">Ambition · Cunning</p>
-                    </div>
-                </div>
 
-                <div class="sorting-result" id="sorting-result">
-                    <h3 id="house-name" style="font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(1.1rem, 3.5vw, 1.6rem); margin-bottom: 4px;">WELCOME TO RAVENCLAW</h3>
-                    <p id="house-quote" style="font-style: italic; font-size: clamp(0.8rem, 2.2vw, 1rem); color: #fff;">"Wit beyond measure is man's greatest treasure."</p>
+                    <div class="sorting-result" id="sorting-result">
+                        <h3 id="house-name" style="font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(0.95rem, 2.8vw, 1.3rem); margin-bottom: 3px;">WELCOME TO RAVENCLAW</h3>
+                        <p id="house-quote" style="font-style: italic; font-size: clamp(0.7rem, 2vw, 0.85rem); color: #fff;">"Wit beyond measure is man's greatest treasure."</p>
+                    </div>
                 </div>
             </div>
 
             <!-- PAGE 3: MAIN MENU HUB -->
             <div class="page" id="page-2">
-                <div class="chapter-number">CHAPTER III</div>
-                <div class="chapter-title" id="hub-title">THE GREAT HALL</div>
-                <div class="chapter-subtitle">Franz's 18th Birthday Celebration</div>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER III</div>
+                    <div class="chapter-title" id="hub-title">THE GREAT HALL</div>
+                    <div class="chapter-subtitle">Franz's 18th Birthday Celebration</div>
 
-                <div class="hub-navigation">
-                    <div class="hub-btn" id="btn-18s" onclick="selectHubOption('18s', 3)">THE 18s ✦</div>
-                    <div class="hub-btn disabled" id="btn-evening" onclick="selectHubOption('evening', 4)">THE EVENING ✦</div>
-                    <div class="hub-btn disabled" id="btn-dress" onclick="selectHubOption('dress', 5)">DRESS CODE & MAP ✦</div>
-                    <div class="hub-btn disabled" id="btn-gallery" onclick="selectHubOption('gallery', 6)">GALLERY ✦</div>
-                    <div class="hub-btn disabled" id="btn-rsvp" onclick="selectHubOption('rsvp', 7)">RSVP ✦</div>
+                    <div class="hub-navigation">
+                        <div class="hub-btn" id="btn-18s" onclick="selectHubOption('18s', 3)">THE 18s ✦</div>
+                        <div class="hub-btn disabled" id="btn-evening" onclick="selectHubOption('evening', 4)">THE EVENING ✦</div>
+                        <div class="hub-btn disabled" id="btn-dress" onclick="selectHubOption('dress', 5)">DRESS CODE & MAP ✦</div>
+                        <div class="hub-btn disabled" id="btn-gallery" onclick="selectHubOption('gallery', 6)">GALLERY ✦</div>
+                        <div class="hub-btn disabled" id="btn-rsvp" onclick="selectHubOption('rsvp', 7)">RSVP ✦</div>
+                    </div>
                 </div>
             </div>
 
             <!-- PAGE 4: SCROLLABLE 18s -->
             <div class="page" id="page-3">
-                <div class="chapter-number">CHAPTER IV</div>
-                <div class="chapter-title">The 18s Traditions</div>
-                <p style="text-align: center; color: var(--ink-sub); font-size: clamp(0.75rem, 2.2vw, 0.95rem); font-weight: 600;">Scroll down to explore Franz's XVIII Roses, Candles, and Tokens.</p>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER IV</div>
+                    <div class="chapter-title">The 18s Traditions</div>
+                    <p style="text-align: center; color: var(--ink-sub); font-size: clamp(0.7rem, 2vw, 0.85rem); font-weight: 600;">Scroll down to explore Franz's XVIII Roses, Candles, and Tokens.</p>
 
-                <div class="eighteens-scroll-container">
                     <div class="section-divider-title">🌹 XVIII ROSES</div>
                     <div class="eighteens-grid" id="roses-grid"></div>
 
@@ -763,110 +777,118 @@
 
             <!-- PAGE 5: THE EVENING -->
             <div class="page" id="page-4">
-                <div class="chapter-number">CHAPTER V</div>
-                <div class="chapter-title">The Evening</div>
-                <div class="chapter-subtitle">Program & Event Details</div>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER V</div>
+                    <div class="chapter-title">The Evening</div>
+                    <div class="chapter-subtitle">Program & Event Details</div>
 
-                <div class="event-highlights-box">
-                    <div class="highlight-title">✨ DATE & TIME ✨</div>
-                    <div class="highlight-detail">SUNDAY · OCTOBER 18, 2026 · 6:00 PM</div>
-                    <div class="highlight-title" style="margin-top: 10px;">🏰 VENUE</div>
-                    <div class="highlight-detail" style="color: #fff;">THE GRAND ASTORIA CONSERVATORY</div>
-                </div>
+                    <div class="event-highlights-box">
+                        <div class="highlight-title">✨ DATE & TIME ✨</div>
+                        <div class="highlight-detail">SUNDAY · OCTOBER 18, 2026 · 6:00 PM</div>
+                        <div class="highlight-title" style="margin-top: 8px;">🏰 VENUE</div>
+                        <div class="highlight-detail" style="color: #fff;">THE GRAND ASTORIA CONSERVATORY</div>
+                    </div>
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-time">6:00 PM</div>
-                        <div class="timeline-title">The Great Hall Opens</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-time">6:30 PM</div>
-                        <div class="timeline-title">The Celebration Begins</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-time">7:30 PM</div>
-                        <div class="timeline-title">The 18s Ceremony</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-time">8:30 PM</div>
-                        <div class="timeline-title">The Feast & Dancing</div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">6:00 PM</div>
+                            <div class="timeline-title">The Great Hall Opens</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">6:30 PM</div>
+                            <div class="timeline-title">The Celebration Begins</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">7:30 PM</div>
+                            <div class="timeline-title">The 18s Ceremony</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">8:30 PM</div>
+                            <div class="timeline-title">The Feast & Dancing</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- PAGE 6: DRESS CODE & MAP -->
             <div class="page" id="page-5">
-                <div class="chapter-number">CHAPTER VI</div>
-                <div class="chapter-title">Dress Code & Map</div>
-                <div class="chapter-subtitle">Wizarding Attire & Venue Location</div>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER VI</div>
+                    <div class="chapter-title">Dress Code & Map</div>
+                    <div class="chapter-subtitle">Wizarding Attire & Venue Location</div>
 
-                <div class="dress-code-highlight-box">
-                    <div style="font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 6px;">🪄 DRESS CODE HIGHLIGHT</div>
-                    <p style="font-size: clamp(0.85rem, 2.5vw, 1.05rem); margin-bottom: 6px;">Guests are requested to wear elegant formal attire.</p>
-                    
-                    <div class="swatch-container">
-                        <div class="swatch">
-                            <div class="swatch-circle" style="background: #FFFFFF;"></div>
-                            <span>WHITE ATTIRE (GUESTS)</span>
-                        </div>
-                        <div class="swatch">
-                            <div class="swatch-circle" style="background: var(--franz-lavender-glow);"></div>
-                            <span style="color: var(--gold-bright);">LAVENDER (RESERVED FOR FRANZ)</span>
+                    <div class="dress-code-highlight-box">
+                        <div style="font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(0.85rem, 2.5vw, 1.1rem); margin-bottom: 4px;">🪄 DRESS CODE HIGHLIGHT</div>
+                        <p style="font-size: clamp(0.75rem, 2vw, 0.95rem); margin-bottom: 4px;">Guests are requested to wear elegant formal attire.</p>
+                        
+                        <div class="swatch-container">
+                            <div class="swatch">
+                                <div class="swatch-circle" style="background: #FFFFFF;"></div>
+                                <span>WHITE ATTIRE (GUESTS)</span>
+                            </div>
+                            <div class="swatch">
+                                <div class="swatch-circle" style="background: var(--franz-lavender-glow);"></div>
+                                <span style="color: var(--gold-bright);">LAVENDER (RESERVED FOR FRANZ)</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div style="text-align: center; margin-top: 6px;">
-                    <p style="font-weight: bold; font-size: clamp(0.9rem, 2.8vw, 1.1rem); color: var(--ink-black);">THE GRAND ASTORIA CONSERVATORY</p>
-                    <p style="font-size: clamp(0.75rem, 2.2vw, 0.9rem); color: var(--ink-sub);">#18 Emerald Heights Boulevard, Quezon City</p>
-                    <a href="https://maps.google.com" target="_blank" class="btn-gold">OPEN GOOGLE MAPS 🗺️</a>
+                    <div style="text-align: center; margin-top: 4px;">
+                        <p style="font-weight: bold; font-size: clamp(0.8rem, 2.4vw, 0.95rem); color: var(--ink-black);">THE GRAND ASTORIA CONSERVATORY</p>
+                        <p style="font-size: clamp(0.65rem, 1.8vw, 0.8rem); color: var(--ink-sub);">#18 Emerald Heights Boulevard, Quezon City</p>
+                        <a href="https://maps.google.com" target="_blank" class="btn-gold">OPEN GOOGLE MAPS 🗺️</a>
+                    </div>
                 </div>
             </div>
 
             <!-- PAGE 7: HARRY POTTER MOVING PORTRAIT GALLERY -->
             <div class="page" id="page-6">
-                <div class="chapter-number">CHAPTER VII</div>
-                <div class="chapter-title">The Living Gallery</div>
-                <div class="chapter-subtitle">Moving Portraits of Franz</div>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER VII</div>
+                    <div class="chapter-title">The Living Gallery</div>
+                    <div class="chapter-subtitle">Moving Portraits of Franz</div>
 
-                <div class="moving-gallery-grid">
-                    <div class="portrait-frame">
-                        <div class="moving-portrait-wrapper">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" alt="Portrait 1">
+                    <div class="moving-gallery-grid">
+                        <div class="portrait-frame">
+                            <div class="moving-portrait-wrapper">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" alt="Portrait 1">
+                            </div>
+                            <div class="portrait-caption">I. Quiet Magic</div>
                         </div>
-                        <div class="portrait-caption">I. Quiet Magic</div>
-                    </div>
-                    <div class="portrait-frame">
-                        <div class="moving-portrait-wrapper">
-                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" style="animation-delay: 1.5s; animation-duration: 9.5s;" alt="Portrait 2">
+                        <div class="portrait-frame">
+                            <div class="moving-portrait-wrapper">
+                                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" style="animation-delay: 1.5s; animation-duration: 9.5s;" alt="Portrait 2">
+                            </div>
+                            <div class="portrait-caption">II. Observant Mind</div>
                         </div>
-                        <div class="portrait-caption">II. The Observant Mind</div>
-                    </div>
-                    <div class="portrait-frame">
-                        <div class="moving-portrait-wrapper">
-                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" style="animation-delay: 3s; animation-duration: 7s;" alt="Portrait 3">
+                        <div class="portrait-frame">
+                            <div class="moving-portrait-wrapper">
+                                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" class="moving-portrait-img" style="animation-delay: 3s; animation-duration: 7s;" alt="Portrait 3">
+                            </div>
+                            <div class="portrait-caption">III. Chapter XVIII</div>
                         </div>
-                        <div class="portrait-caption">III. Chapter XVIII</div>
                     </div>
                 </div>
             </div>
 
             <!-- PAGE 8: RSVP -->
             <div class="page" id="page-7">
-                <div class="chapter-number">CHAPTER VIII</div>
-                <div class="chapter-title">Send Your Owl</div>
-                <div class="chapter-subtitle">The Castle Awaits Your Response</div>
-                <p style="margin-bottom: 20px; text-align: center; font-size: clamp(0.9rem, 2.8vw, 1.1rem); font-weight: 600;">Will you join Franz for her eighteenth chapter?</p>
+                <div class="parchment-content-box">
+                    <div class="chapter-number">CHAPTER VIII</div>
+                    <div class="chapter-title">Send Your Owl</div>
+                    <div class="chapter-subtitle">The Castle Awaits Your Response</div>
+                    <p style="margin-bottom: 15px; text-align: center; font-size: clamp(0.8rem, 2.4vw, 0.95rem); font-weight: 600;">Will you join Franz for her eighteenth chapter?</p>
 
-                <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 25px;">
-                    <a href="https://forms.google.com" target="_blank" class="btn-gold">I'LL BE THERE ✦</a>
-                    <a href="https://forms.google.com" target="_blank" class="btn-gold" style="background: rgba(80, 20, 30, 0.9); border-color: var(--deep-burgundy);">SEND REGRETS ✦</a>
-                </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 15px;">
+                        <a href="https://forms.google.com" target="_blank" class="btn-gold">I'LL BE THERE ✦</a>
+                        <a href="https://forms.google.com" target="_blank" class="btn-gold" style="background: rgba(80, 20, 30, 0.9); border-color: var(--deep-burgundy);">SEND REGRETS ✦</a>
+                    </div>
 
-                <div style="border-top: 2px dashed var(--deep-burgundy); padding-top: 15px; text-align: center;">
-                    <div style="font-family: var(--font-hp-title); font-size: clamp(1.6rem, 5vw, 2.2rem); color: var(--royal-blue); letter-spacing: 3px;">FRANZ XVIII</div>
-                    <p style="font-family: var(--font-handwritten); font-size: clamp(1.2rem, 3.8vw, 1.6rem); color: var(--franz-lavender); margin-top: 4px; font-weight: bold;">The adventure begins.</p>
-                    <div style="margin-top: 10px; font-family: var(--font-hp-title); font-size: clamp(0.75rem, 2vw, 0.9rem); letter-spacing: 3px; color: var(--deep-burgundy);">✦ MISCHIEF MANAGED ✦</div>
+                    <div style="border-top: 1.5px dashed var(--deep-burgundy); padding-top: 10px; text-align: center; width: 100%;">
+                        <div style="font-family: var(--font-hp-title); font-size: clamp(1.3rem, 4vw, 1.8rem); color: var(--royal-blue); letter-spacing: 2px;">FRANZ XVIII</div>
+                        <p style="font-family: var(--font-handwritten); font-size: clamp(1rem, 3vw, 1.4rem); color: var(--franz-lavender); margin-top: 2px; font-weight: bold;">The adventure begins.</p>
+                        <div style="margin-top: 6px; font-family: var(--font-hp-title); font-size: clamp(0.65rem, 1.8vw, 0.8rem); letter-spacing: 2px; color: var(--deep-burgundy);">✦ MISCHIEF MANAGED ✦</div>
+                    </div>
                 </div>
             </div>
 
@@ -878,9 +900,9 @@
         <div class="modal-card">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h4 id="modal-tagline" style="font-family: var(--font-hp-title); color: var(--deep-burgundy);">XVIII ROSES</h4>
-            <h3 id="modal-title" style="font-family: var(--font-hp-title); font-size: clamp(1.3rem, 4vw, 1.8rem); margin: 8px 0 4px 0; color: var(--royal-blue);">Participant Name</h3>
+            <h3 id="modal-title" style="font-family: var(--font-hp-title); font-size: clamp(1.1rem, 3.5vw, 1.5rem); margin: 6px 0 3px 0; color: var(--royal-blue);">Participant Name</h3>
             <div class="subtitle" id="modal-subtitle" style="font-family: var(--font-handwritten); color: var(--deep-burgundy);">A Wish for Courage</div>
-            <p id="modal-message" style="font-size: clamp(0.85rem, 2.5vw, 1.05rem); line-height: 1.6; color: #222;">May Franz always know her worth and have the courage to follow the path that feels truly hers.</p>
+            <p id="modal-message" style="font-size: clamp(0.75rem, 2.2vw, 0.95rem); line-height: 1.5; color: #222;">May Franz always know her worth and have the courage to follow the path that feels truly hers.</p>
         </div>
     </div>
 
