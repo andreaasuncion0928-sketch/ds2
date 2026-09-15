@@ -360,6 +360,7 @@
             opacity: 0.6;
         }
 
+        /* CHAPTER II: SORTING CEREMONY & SORTING HAT CONTAINER */
         .sorting-hat-container {
             position: relative;
             width: 100%;
@@ -373,7 +374,7 @@
         .sorting-hat-btn {
             font-size: clamp(3rem, 6vw, 4.5rem);
             cursor: pointer;
-            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1);
             user-select: none;
             filter: drop-shadow(0 0 12px var(--antique-gold));
             z-index: 100;
@@ -720,18 +721,21 @@
             font-weight: bold;
         }
 
-        /* CHAPTER IX FULL-CARD PORTRAIT STYLING */
+        /* CHAPTER IX FULL-CARD PORTRAIT STYLING (PERFECT FIT FOR BROWSER VIEW) */
         .celebration-full-wrapper {
             width: 100%;
-            height: clamp(240px, 42vh, 380px);
+            height: clamp(260px, 45vh, 420px);
             border: 3px solid var(--antique-gold);
             outline: 1px solid #3d2a17;
-            background: #000;
+            background: #0d0905;
             border-radius: 4px;
             overflow: hidden;
             position: relative;
             box-shadow: 0 8px 30px rgba(0,0,0,0.9);
             margin-bottom: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .celebration-full-img {
@@ -739,14 +743,25 @@
             height: 100%;
             object-fit: cover;
             object-position: center center;
-            filter: grayscale(0.55) sepia(0.35) contrast(1.2) brightness(0.95);
+            filter: grayscale(0.45) sepia(0.3) contrast(1.2) brightness(0.95);
             animation: fullPictureHogwartsMotion 10s infinite ease-in-out alternate;
         }
 
+        @media (min-width: 769px) {
+            .celebration-full-wrapper {
+                height: clamp(280px, 48vh, 440px);
+            }
+            /* Ensures gallery4.jpg fits completely without cropping on desktop browsers */
+            .celebration-full-img {
+                object-fit: contain;
+                background: #0d0905;
+            }
+        }
+
         @keyframes fullPictureHogwartsMotion {
-            0% { transform: scale(1) translate(0, 0); filter: grayscale(0.55) sepia(0.35) contrast(1.2) brightness(0.95); }
-            50% { transform: scale(1.05) translate(-3px, -2px); filter: grayscale(0.35) sepia(0.25) contrast(1.25) brightness(1.05); }
-            100% { transform: scale(1.03) translate(2px, -1px); filter: grayscale(0.45) sepia(0.3) contrast(1.15) brightness(0.9); }
+            0% { transform: scale(1) translate(0, 0); filter: grayscale(0.45) sepia(0.3) contrast(1.2) brightness(0.95); }
+            50% { transform: scale(1.04) translate(-2px, -2px); filter: grayscale(0.25) sepia(0.2) contrast(1.25) brightness(1.05); }
+            100% { transform: scale(1.02) translate(2px, -1px); filter: grayscale(0.35) sepia(0.25) contrast(1.15) brightness(0.9); }
         }
 
         .celebration-quote-text {
@@ -1099,7 +1114,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 9: CHAPTER IX - FULL CELEBRATION PAGE (GALLERY4.JPG) -->
+            <!-- PAGE 9: CHAPTER IX - FULL CELEBRATION PAGE (GALLERY4.JPG FIT FOR BROWSER VIEW) -->
             <div class="page" id="page-8">
                 <div class="parchment-content-box">
                     <div class="chapter-number">CHAPTER IX</div>
@@ -1145,7 +1160,7 @@
             overlay.style.visibility = 'hidden';
         }
 
-        /* Sorting Hat Logic */
+        /* Sorting Hat Logic - Dynamic Position Centered on Top of Chosen House Card */
         const houses = [
             { id: "gryffindor", name: "GRYFFINDOR", quote: "Where dwell the brave at heart, their daring, nerve, and chivalry set Gryffindors apart.", color: "#f87171", franzText: "Like Franz, Gryffindors possess fierce courage, determination, and a magnetic spirit that lights up every room." },
             { id: "ravenclaw", name: "RAVENCLAW", quote: "Wit beyond measure is man's greatest treasure.", color: "#60a5fa", franzText: "Like Franz, Ravenclaws possess an inquisitive mind, brilliant wisdom, and a natural elegance that shines." },
@@ -1169,10 +1184,11 @@
             const hatRect = hat.getBoundingClientRect();
             const cardRect = targetCard.getBoundingClientRect();
 
+            // Precise offset calculation so hat rests directly on top border of chosen house card
             const deltaX = (cardRect.left + (cardRect.width / 2)) - (hatRect.left + (hatRect.width / 2));
-            const deltaY = cardRect.top - hatRect.top - (hatRect.height / 1.1);
+            const deltaY = cardRect.top - hatRect.top - (hatRect.height * 0.75);
 
-            hat.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.15) rotate(-10deg)`;
+            hat.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.1) rotate(-8deg)`;
 
             setTimeout(() => {
                 document.querySelectorAll('.house-card').forEach(card => {
@@ -1222,7 +1238,6 @@
         }
 
         function changePage(direction) {
-            // Allows page navigation to Chapter IX (Page 8) after RSVP (Page 7)
             if (currentPage >= 3 && currentPage < 7 && direction === 1) {
                 goToPage(2);
                 return;
