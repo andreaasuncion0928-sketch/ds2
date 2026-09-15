@@ -434,7 +434,7 @@
             text-align: center;
         }
 
-        /* CHAPTER 3: MAIN MENU HUB & PERSONALITY DESCRIPTION */
+        /* CHAPTER 3: MAIN MENU HUB & HIGHLY READABLE PERSONALITY DESCRIPTION CARD */
         .hub-navigation {
             display: flex;
             flex-direction: column;
@@ -480,17 +480,22 @@
             color: #4ade80;
         }
 
+        /* UPDATED: Clear, prominent, highly readable personality description styling */
         .franz-house-personality {
-            font-family: var(--font-serif);
-            font-size: clamp(0.75rem, 1.7vw, 0.9rem);
-            color: #e6ded1;
-            font-style: italic;
-            line-height: 1.4;
-            margin: 6px 0 10px 0;
-            padding: 8px 12px;
-            background: rgba(10, 8, 5, 0.6);
-            border-left: 2px solid var(--antique-gold);
-            border-right: 2px solid var(--antique-gold);
+            font-family: var(--font-body);
+            font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.5;
+            margin: 12px 0 16px 0;
+            padding: 14px 16px;
+            background: rgba(12, 9, 6, 0.95);
+            border: 1.5px solid var(--antique-gold);
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(243, 207, 122, 0.25), inset 0 0 20px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+            width: 100%;
+            max-width: 440px;
         }
 
         /* CHAPTER 4: 18s CLEAN 3-COLUMN LIST LAYOUT WITH STEP FADE-IN */
@@ -670,12 +675,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%; /* Focused on faces */
+            object-position: center 20%;
             filter: grayscale(0.65) sepia(0.45) contrast(1.25) brightness(0.9);
-            transform-origin: 50% 30%; /* Anchor transforms around the face area */
+            transform-origin: 50% 30%;
         }
 
-        /* Distinct Realistic Living Face Animations */
         .face-animation-1 {
             animation: livingFaceMovement1 8s infinite ease-in-out alternate;
         }
@@ -686,17 +690,15 @@
             animation: livingFaceMovement3 9s infinite ease-in-out alternate;
         }
 
-        /* Face Motion 1: Head Nod, Eye Micro-Blink, Subtle Smile Motion */
         @keyframes livingFaceMovement1 {
             0% { transform: scale(1.15) rotate(0deg) translateY(0); filter: grayscale(0.65) sepia(0.45) contrast(1.25); }
             15% { transform: scale(1.17) rotate(1.5deg) translateY(-2px); }
-            30% { transform: scale(1.15) rotate(0deg) translateY(0); filter: grayscale(0.4) sepia(0.3) contrast(1.35) brightness(1.05); } /* Blink & smile moment */
+            30% { transform: scale(1.15) rotate(0deg) translateY(0); filter: grayscale(0.4) sepia(0.3) contrast(1.35) brightness(1.05); }
             60% { transform: scale(1.20) rotate(-2deg) translateY(-4px); }
             85% { transform: scale(1.16) rotate(1deg) translateY(-1px); }
             100% { transform: scale(1.18) rotate(-0.5deg) translateY(-3px); filter: grayscale(0.6) sepia(0.4) contrast(1.3); }
         }
 
-        /* Face Motion 2: Curious Look, Head Tilt & Breathing Shift */
         @keyframes livingFaceMovement2 {
             0% { transform: scale(1.18) rotate(0deg); }
             20% { transform: scale(1.22) rotate(-3deg) translateX(-2px); filter: grayscale(0.5) sepia(0.35) brightness(1.0); }
@@ -705,7 +707,6 @@
             100% { transform: scale(1.20) rotate(1.5deg) translateY(0); }
         }
 
-        /* Face Motion 3: Subtle Head Turn & Eye Contact Adjustment */
         @keyframes livingFaceMovement3 {
             0% { transform: scale(1.16) rotate(1deg); }
             35% { transform: scale(1.21) rotate(-2.5deg) translateY(-3px); filter: grayscale(0.45) sepia(0.25) contrast(1.3); }
@@ -808,7 +809,6 @@
                     <h2 style="font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(0.9rem, 2.2vw, 1.3rem); margin-bottom: 3px;">Hogwarts School of Witchcraft & Wizardry</h2>
                     <p style="font-size: clamp(0.65rem, 1.5vw, 0.8rem); letter-spacing: 1px; font-weight: bold; color: #e6ded1;">CORDIALLY INVITES YOU TO CELEBRATE</p>
                     
-                    <!-- SOFT ELEGANT LAVENDER-TO-WHITE FRANZ TITLE -->
                     <div class="invitation-name">FRANZ</div>
                     
                     <div class="invitation-age">at Eighteen</div>
@@ -867,6 +867,7 @@
                     <div class="chapter-number">CHAPTER III</div>
                     <div class="chapter-title" id="hub-title">THE GREAT HALL</div>
                     
+                    <!-- HIGHLY READABLE PERSONALITY CARD FOR FRANZ -->
                     <div class="franz-house-personality" id="franz-personality-text">
                         "Just like Franz, true wizards walk with grace, intellect, and an unwavering spirit to ignite their own legacy."
                     </div>
@@ -933,7 +934,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 6: DRESS CODE & MAP (WHITE THEME ONLY) -->
+            <!-- PAGE 6: DRESS CODE & MAP -->
             <div class="page" id="page-5">
                 <div class="parchment-content-box">
                     <div class="chapter-number">CHAPTER VI</div>
@@ -1070,9 +1071,8 @@
             const hatRect = hat.getBoundingClientRect();
             const cardRect = targetCard.getBoundingClientRect();
 
-            // Calculate precise coordinates to position the hat directly on top of the chosen house box
             const deltaX = (cardRect.left + (cardRect.width / 2)) - (hatRect.left + (hatRect.width / 2));
-            const deltaY = cardRect.top - hatRect.top - (hatRect.height / 1.1); // Positioned comfortably above the card
+            const deltaY = cardRect.top - hatRect.top - (hatRect.height / 1.1);
 
             hat.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.15) rotate(-10deg)`;
 
