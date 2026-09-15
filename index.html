@@ -43,6 +43,7 @@
             color: var(--ink-black);
         }
 
+        /* Fullscreen Ambient Parchment Viewport */
         .parchment-viewport {
             position: fixed;
             top: 0;
@@ -58,6 +59,7 @@
             align-items: center;
         }
 
+        /* Fullscreen Video Overlay Intro */
         #video-intro-overlay {
             position: fixed;
             top: 0;
@@ -718,6 +720,46 @@
             font-weight: bold;
         }
 
+        /* CHAPTER IX FULL-CARD PORTRAIT STYLING */
+        .celebration-full-wrapper {
+            width: 100%;
+            height: clamp(240px, 42vh, 380px);
+            border: 3px solid var(--antique-gold);
+            outline: 1px solid #3d2a17;
+            background: #000;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.9);
+            margin-bottom: 14px;
+        }
+
+        .celebration-full-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            filter: grayscale(0.55) sepia(0.35) contrast(1.2) brightness(0.95);
+            animation: fullPictureHogwartsMotion 10s infinite ease-in-out alternate;
+        }
+
+        @keyframes fullPictureHogwartsMotion {
+            0% { transform: scale(1) translate(0, 0); filter: grayscale(0.55) sepia(0.35) contrast(1.2) brightness(0.95); }
+            50% { transform: scale(1.05) translate(-3px, -2px); filter: grayscale(0.35) sepia(0.25) contrast(1.25) brightness(1.05); }
+            100% { transform: scale(1.03) translate(2px, -1px); filter: grayscale(0.45) sepia(0.3) contrast(1.15) brightness(0.9); }
+        }
+
+        .celebration-quote-text {
+            font-family: var(--font-handwritten);
+            font-size: clamp(1.2rem, 3.2vw, 1.8rem);
+            color: var(--gold-bright);
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px var(--gold-glow);
+            line-height: 1.3;
+        }
+
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1057,33 +1099,14 @@
                 </div>
             </div>
 
-            <!-- PAGE 9: CHAPTER IX - THE LEGENDARY TRIO (NEW PAGE) -->
+            <!-- PAGE 9: CHAPTER IX - FULL CELEBRATION PAGE (GALLERY4.JPG) -->
             <div class="page" id="page-8">
                 <div class="parchment-content-box">
                     <div class="chapter-number">CHAPTER IX</div>
-                    <div class="chapter-title">The Golden Trio</div>
-                    <div class="chapter-subtitle">Harry, Ron & Hermione</div>
-
-                    <div class="newspaper-gallery-grid">
-                        <div class="newspaper-frame">
-                            <div class="newspaper-portrait-wrapper">
-                                <img src="harry.jpg" class="newspaper-portrait-img face-animation-1" alt="Harry Potter">
-                            </div>
-                            <div class="newspaper-caption">I. Harry Potter</div>
-                        </div>
-                        <div class="newspaper-frame">
-                            <div class="newspaper-portrait-wrapper">
-                                <img src="ron.jpg" class="newspaper-portrait-img face-animation-2" alt="Ron Weasley">
-                            </div>
-                            <div class="newspaper-caption">II. Ron Weasley</div>
-                        </div>
-                        <div class="newspaper-frame">
-                            <div class="newspaper-portrait-wrapper">
-                                <img src="hermione.jpg" class="newspaper-portrait-img face-animation-3" alt="Hermione Granger">
-                            </div>
-                            <div class="newspaper-caption">III. Hermione Granger</div>
-                        </div>
+                    <div class="celebration-full-wrapper">
+                        <img src="gallery4.jpg" class="celebration-full-img" alt="We'd love to celebrate with you">
                     </div>
+                    <div class="celebration-quote-text">We’d love to celebrate with you. ✨</div>
                 </div>
             </div>
 
@@ -1199,7 +1222,7 @@
         }
 
         function changePage(direction) {
-            // Allows normal turn to Page 8 (Trio Page) after RSVP (Page 7)
+            // Allows page navigation to Chapter IX (Page 8) after RSVP (Page 7)
             if (currentPage >= 3 && currentPage < 7 && direction === 1) {
                 goToPage(2);
                 return;
