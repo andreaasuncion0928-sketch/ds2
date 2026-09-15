@@ -37,7 +37,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Lock viewport scrolling for page-turning */
+            overflow: hidden;
             background-color: var(--midnight-dark);
             font-family: var(--font-body);
             color: var(--ink-black);
@@ -330,25 +330,25 @@
             box-shadow: 0 0 25px var(--gold-bright);
         }
 
-        /* CHAPTER 1: INVITATION PAGE */
+        /* CHAPTER 1: SOFT ELEGANT LAVENDER-TO-WHITE FRANZ TITLE */
         .invitation-name {
             font-family: var(--font-hp-title);
-            font-size: clamp(2.8rem, 7vw, 4.8rem);
+            font-size: clamp(2.6rem, 6.5vw, 4.2rem);
             font-weight: 900;
             letter-spacing: clamp(4px, 1.5vw, 8px);
             margin: 10px 0;
             line-height: 1.0;
-            background: linear-gradient(180deg, #fff7d6 0%, #f3cf7a 45%, #c69c3a 80%, #7a5a18 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #e6d8ff 60%, #b39ddb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(243, 207, 122, 0.7));
+            filter: drop-shadow(0 0 10px rgba(179, 157, 219, 0.5));
             text-transform: uppercase;
         }
 
         .invitation-age {
             font-family: var(--font-handwritten);
             font-size: clamp(1.4rem, 2.8vw, 2.2rem);
-            color: var(--gold-bright);
+            color: #e6d8ff;
             margin-bottom: 8px;
             font-weight: bold;
         }
@@ -361,7 +361,7 @@
             opacity: 0.6;
         }
 
-        /* CHAPTER 2: SORTING CEREMONY & HAT ANIMATION */
+        /* CHAPTER 2: SORTING CEREMONY & HAT PLACEMENT */
         .sorting-hat-container {
             position: relative;
             width: 100%;
@@ -375,10 +375,11 @@
         .sorting-hat-btn {
             font-size: clamp(3rem, 6vw, 4.5rem);
             cursor: pointer;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
             user-select: none;
             filter: drop-shadow(0 0 12px var(--antique-gold));
-            z-index: 50;
+            z-index: 100;
+            position: relative;
         }
 
         .sorting-hat-btn:hover { transform: scale(1.15) rotate(-5deg); }
@@ -400,6 +401,7 @@
             color: #fff;
             text-align: center;
             transition: all 0.5s ease;
+            position: relative;
         }
 
         .house-card.gryffindor { border-color: #b91c1c; background: rgba(80, 10, 10, 0.92); }
@@ -432,7 +434,7 @@
             text-align: center;
         }
 
-        /* CHAPTER 3: MAIN MENU HUB & FRANZ PERSONALITY BOX */
+        /* CHAPTER 3: MAIN MENU HUB & PERSONALITY DESCRIPTION */
         .hub-navigation {
             display: flex;
             flex-direction: column;
@@ -491,7 +493,7 @@
             border-right: 2px solid var(--antique-gold);
         }
 
-        /* CHAPTER 4: 18s CLEAN 3-COLUMN LIST LAYOUT (NO BOXES) WITH STEP FADE-IN */
+        /* CHAPTER 4: 18s CLEAN 3-COLUMN LIST LAYOUT WITH STEP FADE-IN */
         .eighteens-columns-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -588,7 +590,6 @@
             margin-top: 2px;
         }
 
-        /* Animated Hogwarts Moving Portrait for Venue */
         .venue-portrait-frame {
             width: 100%;
             border: 5px solid #3d2a17;
@@ -621,7 +622,7 @@
             100% { transform: scale(1.05) translate(3px, -2px); filter: sepia(0.35) contrast(1.1) brightness(0.85); }
         }
 
-        /* CHAPTER 6: DRESS CODE & MAP (PURE WHITE THEME) */
+        /* CHAPTER 6: DRESS CODE & MAP (WHITE THEME ONLY) */
         .dress-code-highlight-box {
             background: rgba(10, 8, 5, 0.95);
             border: 1.5px double var(--gold-bright);
@@ -638,7 +639,7 @@
         .swatch { display: flex; flex-direction: column; align-items: center; font-size: clamp(0.75rem, 1.6vw, 0.85rem); font-weight: bold; }
         .swatch-circle { width: clamp(45px, 8vw, 55px); height: clamp(45px, 8vw, 55px); border-radius: 50%; margin-bottom: 6px; border: 2px solid var(--antique-gold); box-shadow: 0 0 15px rgba(255,255,255,0.8); }
 
-        /* CHAPTER 7: DAILY PROPHET MOVING NEWSPAPER GALLERY */
+        /* CHAPTER 7: ADVANCED HOGWARTS FACIAL MOTION GALLERY */
         .newspaper-gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -658,7 +659,7 @@
 
         .newspaper-portrait-wrapper {
             width: 100%;
-            height: clamp(110px, 20vh, 160px);
+            height: clamp(120px, 22vh, 170px);
             position: relative;
             overflow: hidden;
             background: #000;
@@ -669,16 +670,47 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(0.7) sepia(0.5) contrast(1.3) brightness(0.85);
-            animation: dailyProphetMovingPhoto 9s infinite ease-in-out alternate;
+            object-position: center 20%; /* Focused on faces */
+            filter: grayscale(0.65) sepia(0.45) contrast(1.25) brightness(0.9);
+            transform-origin: 50% 30%; /* Anchor transforms around the face area */
         }
 
-        /* Authentic moving newspaper photo animation */
-        @keyframes dailyProphetMovingPhoto {
-            0% { transform: scale(1) rotate(0deg); filter: grayscale(0.7) sepia(0.5) contrast(1.3) brightness(0.85); }
-            25% { transform: scale(1.05) rotate(0.8deg); filter: grayscale(0.5) sepia(0.4) contrast(1.4) brightness(1.0); }
-            60% { transform: scale(1.08) translate(-2px, -3px) rotate(-0.5deg); filter: grayscale(0.8) sepia(0.6) contrast(1.2) brightness(0.8); }
-            100% { transform: scale(1.02) rotate(0.4deg); filter: grayscale(0.6) sepia(0.45) contrast(1.35) brightness(0.9); }
+        /* Distinct Realistic Living Face Animations */
+        .face-animation-1 {
+            animation: livingFaceMovement1 8s infinite ease-in-out alternate;
+        }
+        .face-animation-2 {
+            animation: livingFaceMovement2 10s infinite ease-in-out alternate;
+        }
+        .face-animation-3 {
+            animation: livingFaceMovement3 9s infinite ease-in-out alternate;
+        }
+
+        /* Face Motion 1: Head Nod, Eye Micro-Blink, Subtle Smile Motion */
+        @keyframes livingFaceMovement1 {
+            0% { transform: scale(1.15) rotate(0deg) translateY(0); filter: grayscale(0.65) sepia(0.45) contrast(1.25); }
+            15% { transform: scale(1.17) rotate(1.5deg) translateY(-2px); }
+            30% { transform: scale(1.15) rotate(0deg) translateY(0); filter: grayscale(0.4) sepia(0.3) contrast(1.35) brightness(1.05); } /* Blink & smile moment */
+            60% { transform: scale(1.20) rotate(-2deg) translateY(-4px); }
+            85% { transform: scale(1.16) rotate(1deg) translateY(-1px); }
+            100% { transform: scale(1.18) rotate(-0.5deg) translateY(-3px); filter: grayscale(0.6) sepia(0.4) contrast(1.3); }
+        }
+
+        /* Face Motion 2: Curious Look, Head Tilt & Breathing Shift */
+        @keyframes livingFaceMovement2 {
+            0% { transform: scale(1.18) rotate(0deg); }
+            20% { transform: scale(1.22) rotate(-3deg) translateX(-2px); filter: grayscale(0.5) sepia(0.35) brightness(1.0); }
+            45% { transform: scale(1.19) rotate(2deg) translateX(1px); }
+            70% { transform: scale(1.24) rotate(-1deg) translateY(-3px); filter: grayscale(0.7) sepia(0.5) brightness(0.85); }
+            100% { transform: scale(1.20) rotate(1.5deg) translateY(0); }
+        }
+
+        /* Face Motion 3: Subtle Head Turn & Eye Contact Adjustment */
+        @keyframes livingFaceMovement3 {
+            0% { transform: scale(1.16) rotate(1deg); }
+            35% { transform: scale(1.21) rotate(-2.5deg) translateY(-3px); filter: grayscale(0.45) sepia(0.25) contrast(1.3); }
+            65% { transform: scale(1.17) rotate(0deg) translateY(0); }
+            100% { transform: scale(1.23) rotate(2deg) translateY(-2px); filter: grayscale(0.65) sepia(0.45) contrast(1.2); }
         }
 
         .newspaper-caption {
@@ -776,7 +808,7 @@
                     <h2 style="font-family: var(--font-hp-title); color: var(--gold-bright); font-size: clamp(0.9rem, 2.2vw, 1.3rem); margin-bottom: 3px;">Hogwarts School of Witchcraft & Wizardry</h2>
                     <p style="font-size: clamp(0.65rem, 1.5vw, 0.8rem); letter-spacing: 1px; font-weight: bold; color: #e6ded1;">CORDIALLY INVITES YOU TO CELEBRATE</p>
                     
-                    <!-- HIGHLIGHTED HARRY POTTER GRADIENT TITLE -->
+                    <!-- SOFT ELEGANT LAVENDER-TO-WHITE FRANZ TITLE -->
                     <div class="invitation-name">FRANZ</div>
                     
                     <div class="invitation-age">at Eighteen</div>
@@ -835,7 +867,6 @@
                     <div class="chapter-number">CHAPTER III</div>
                     <div class="chapter-title" id="hub-title">THE GREAT HALL</div>
                     
-                    <!-- Dynamic House Personality Text for Franz -->
                     <div class="franz-house-personality" id="franz-personality-text">
                         "Just like Franz, true wizards walk with grace, intellect, and an unwavering spirit to ignite their own legacy."
                     </div>
@@ -858,19 +889,16 @@
                     <p style="text-align: center; color: #e6ded1; font-size: clamp(0.7rem, 1.8vw, 0.85rem); font-weight: 600;">The honored guests of Franz's eighteenth milestone.</p>
 
                     <div class="eighteens-columns-container">
-                        <!-- Column 1: 18 Roses -->
                         <div class="eighteen-column" id="col-roses">
                             <div class="eighteen-column-header">🌹 18 ROSES</div>
                             <div id="roses-list"></div>
                         </div>
 
-                        <!-- Column 2: 18 Candles -->
                         <div class="eighteen-column" id="col-candles">
                             <div class="eighteen-column-header">🕯️ 18 CANDLES</div>
                             <div id="candles-list"></div>
                         </div>
 
-                        <!-- Column 3: 18 Blue Bills -->
                         <div class="eighteen-column" id="col-bills">
                             <div class="eighteen-column-header">💵 18 BLUE BILLS</div>
                             <div id="bills-list"></div>
@@ -879,7 +907,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 5: THE EVENING (READABLE VENUE & ANIMATED VENUE PORTRAIT) -->
+            <!-- PAGE 5: THE EVENING -->
             <div class="page" id="page-4">
                 <div class="parchment-content-box">
                     <div class="chapter-number">CHAPTER V</div>
@@ -896,7 +924,6 @@
                         <div style="font-size: clamp(0.7rem, 1.5vw, 0.8rem); color: #e6ded1; margin-top: 2px;">#18 Emerald Heights Boulevard, Quezon City</div>
                     </div>
 
-                    <!-- Hogwarts Living Venue Portrait -->
                     <div class="venue-portrait-frame">
                         <div class="venue-portrait-img-wrapper">
                             <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80" class="venue-portrait-img" alt="Astoria Conservatory Castle">
@@ -933,7 +960,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 7: DAILY PROPHET MOVING NEWSPAPER GALLERY -->
+            <!-- PAGE 7: FACIAL MOVING PORTRAIT GALLERY -->
             <div class="page" id="page-6">
                 <div class="parchment-content-box">
                     <div class="chapter-number">CHAPTER VII</div>
@@ -943,19 +970,19 @@
                     <div class="newspaper-gallery-grid">
                         <div class="newspaper-frame">
                             <div class="newspaper-portrait-wrapper">
-                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="newspaper-portrait-img" alt="Portrait 1">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="newspaper-portrait-img face-animation-1" alt="Portrait 1">
                             </div>
                             <div class="newspaper-caption">I. Quiet Magic</div>
                         </div>
                         <div class="newspaper-frame">
                             <div class="newspaper-portrait-wrapper">
-                                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" class="newspaper-portrait-img" style="animation-delay: 2s; animation-duration: 11s;" alt="Portrait 2">
+                                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" class="newspaper-portrait-img face-animation-2" alt="Portrait 2">
                             </div>
                             <div class="newspaper-caption">II. Observant Mind</div>
                         </div>
                         <div class="newspaper-frame">
                             <div class="newspaper-portrait-wrapper">
-                                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" class="newspaper-portrait-img" style="animation-delay: 4.5s; animation-duration: 8.5s;" alt="Portrait 3">
+                                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" class="newspaper-portrait-img face-animation-3" alt="Portrait 3">
                             </div>
                             <div class="newspaper-caption">III. Chapter XVIII</div>
                         </div>
@@ -1019,7 +1046,7 @@
             overlay.style.visibility = 'hidden';
         }
 
-        /* Sorting Hat Logic & Animations */
+        /* Sorting Hat Logic & Top Placement Positioning */
         const houses = [
             { id: "gryffindor", name: "GRYFFINDOR", quote: "Where dwell the brave at heart, their daring, nerve, and chivalry set Gryffindors apart.", color: "#f87171", franzText: "Like Franz, Gryffindors possess fierce courage, determination, and a magnetic spirit that lights up every room." },
             { id: "ravenclaw", name: "RAVENCLAW", quote: "Wit beyond measure is man's greatest treasure.", color: "#60a5fa", franzText: "Like Franz, Ravenclaws possess an inquisitive mind, brilliant wisdom, and a natural elegance that shines." },
@@ -1036,22 +1063,20 @@
             const selectedHouse = houses[Math.floor(Math.random() * houses.length)];
             const targetCard = document.getElementById(`card-${selectedHouse.id}`);
 
-            // Reset cards styling
             document.querySelectorAll('.house-card').forEach(card => {
                 card.classList.remove('sorted-target', 'dimmed');
             });
 
-            // Animate Sorting Hat flying over chosen house card
             const hatRect = hat.getBoundingClientRect();
             const cardRect = targetCard.getBoundingClientRect();
 
-            const deltaX = cardRect.left + (cardRect.width / 2) - (hatRect.left + (hatRect.width / 2));
-            const deltaY = cardRect.top - hatRect.top - 15;
+            // Calculate precise coordinates to position the hat directly on top of the chosen house box
+            const deltaX = (cardRect.left + (cardRect.width / 2)) - (hatRect.left + (hatRect.width / 2));
+            const deltaY = cardRect.top - hatRect.top - (hatRect.height / 1.1); // Positioned comfortably above the card
 
-            hat.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.3) rotate(-15deg)`;
+            hat.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.15) rotate(-10deg)`;
 
             setTimeout(() => {
-                // Highlight sorted target card & dim others
                 document.querySelectorAll('.house-card').forEach(card => {
                     if (card.id === `card-${selectedHouse.id}`) {
                         card.classList.add('sorted-target');
@@ -1060,22 +1085,19 @@
                     }
                 });
 
-                // Display result
                 houseName.innerText = `WELCOME TO ${selectedHouse.name}`;
                 houseQuote.innerText = `"${selectedHouse.quote}"`;
                 resultBox.style.display = 'block';
 
-                // Update Chapter III Main Menu title and Franz's house personality description
                 document.getElementById('hub-title').innerText = `${selectedHouse.name} HALL`;
                 document.getElementById('hub-title').style.color = selectedHouse.color;
                 document.getElementById('franz-personality-text').innerText = `"${selectedHouse.franzText}"`;
 
-                // Return hat after delay
                 setTimeout(() => {
                     hat.style.transform = `translate(0px, 0px) scale(1) rotate(0deg)`;
-                }, 2000);
+                }, 2200);
 
-            }, 600);
+            }, 700);
         }
 
         /* Page Turning System */
@@ -1095,7 +1117,6 @@
 
             document.getElementById('prev-btn').classList.toggle('disabled', currentPage === 0);
             
-            // Trigger 18s Staggered Fade-in animation when arriving at Page 3 (Index 3)
             if (currentPage === 3) {
                 trigger18sFadeIn();
             }
