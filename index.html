@@ -770,7 +770,7 @@
             .houses-grid { grid-template-columns: repeat(4, 1fr); }
         }
 
-        /* UPDATED MOBILE VIEW STYLING FOR GALLERY: Centering faces & optimizing frame heights */
+        /* UPDATED MOBILE VIEW STYLING FOR GALLERY: Zoomed-out portraits & subtle Hogwarts facial motion */
         @media (max-width: 768px) {
             .newspaper-gallery-grid {
                 grid-template-columns: 1fr;
@@ -780,38 +780,41 @@
                 height: 180px;
             }
             .newspaper-portrait-img {
-                object-position: center 18%;
-                transform-origin: 50% 20%;
+                object-position: center 25%; /* Lowered focal point to keep full head & face in frame */
+                transform: scale(1.02); /* Zoomed out so top picture & face are clearly visible */
+                transform-origin: center 25%;
             }
+
+            /* Smooth Mobile Hogwarts Picture Movements */
             .face-animation-1 {
-                animation: livingFaceMovementMobile1 8s infinite ease-in-out alternate;
+                animation: livingFaceMovementMobile1 7.5s infinite ease-in-out alternate;
             }
             .face-animation-2 {
-                animation: livingFaceMovementMobile2 10s infinite ease-in-out alternate;
+                animation: livingFaceMovementMobile2 9.5s infinite ease-in-out alternate;
             }
             .face-animation-3 {
-                animation: livingFaceMovementMobile3 9s infinite ease-in-out alternate;
+                animation: livingFaceMovementMobile3 8.5s infinite ease-in-out alternate;
             }
 
             @keyframes livingFaceMovementMobile1 {
-                0% { transform: scale(1.08) rotate(0deg) translateY(0); }
-                30% { transform: scale(1.12) rotate(1deg) translateY(-2px); filter: grayscale(0.4) sepia(0.3) brightness(1.05); }
-                60% { transform: scale(1.10) rotate(-1.5deg) translateY(-3px); }
-                100% { transform: scale(1.11) rotate(0deg) translateY(-1px); }
+                0% { transform: scale(1.02) rotate(0deg) translateY(0); filter: grayscale(0.65) sepia(0.45) contrast(1.25); }
+                25% { transform: scale(1.05) rotate(1.2deg) translateY(-2px); filter: grayscale(0.4) sepia(0.3) brightness(1.05); }
+                65% { transform: scale(1.03) rotate(-1deg) translateY(-1px); filter: grayscale(0.6) sepia(0.4) contrast(1.3); }
+                100% { transform: scale(1.04) rotate(0.5deg) translateY(-2px); }
             }
 
             @keyframes livingFaceMovementMobile2 {
-                0% { transform: scale(1.10) rotate(0deg); }
-                40% { transform: scale(1.14) rotate(-2deg) translateX(-1px); filter: grayscale(0.5) sepia(0.35) brightness(1.0); }
-                70% { transform: scale(1.11) rotate(1.5deg) translateY(-2px); }
-                100% { transform: scale(1.12) rotate(0deg); }
+                0% { transform: scale(1.02) rotate(0deg) translateX(0); }
+                35% { transform: scale(1.06) rotate(-1.5deg) translateX(-2px); filter: grayscale(0.5) sepia(0.35) brightness(1.0); }
+                70% { transform: scale(1.03) rotate(1deg) translateY(-2px); }
+                100% { transform: scale(1.05) rotate(-0.5deg); }
             }
 
             @keyframes livingFaceMovementMobile3 {
-                0% { transform: scale(1.09) rotate(0.5deg); }
-                35% { transform: scale(1.13) rotate(-1.5deg) translateY(-2px); filter: grayscale(0.45) sepia(0.25) contrast(1.3); }
-                70% { transform: scale(1.10) rotate(1deg) translateY(0); }
-                100% { transform: scale(1.12) rotate(0deg); }
+                0% { transform: scale(1.02) rotate(0.5deg); }
+                40% { transform: scale(1.05) rotate(-1.2deg) translateY(-2px); filter: grayscale(0.45) sepia(0.25) contrast(1.3); }
+                75% { transform: scale(1.03) rotate(1deg) translateY(0); }
+                100% { transform: scale(1.04) rotate(-0.5deg); }
             }
 
             .eighteens-columns-container { gap: 6px; }
@@ -906,7 +909,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 3: MAIN MENU HUB & THINNER ALIGNED PERSONALITY DESCRIPTION -->
+            <!-- PAGE 3: MAIN MENU HUB & PERSONALITY DESCRIPTION CARD -->
             <div class="page" id="page-2">
                 <div class="parchment-content-box">
                     <div class="chapter-number">CHAPTER III</div>
@@ -1005,7 +1008,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 7: FACIAL MOVING PORTRAIT GALLERY (MOBILE ENHANCED) -->
+            <!-- PAGE 7: FACIAL MOVING PORTRAIT GALLERY (ZOOMED OUT MOBILE VIEW) -->
             <div class="page" id="page-6">
                 <div class="parchment-content-box">
                     <div class="chapter-number">CHAPTER VII</div>
