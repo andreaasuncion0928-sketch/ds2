@@ -110,29 +110,49 @@
             width: 100%;
         }
 
-        .intro-music-btn {
+        /* OVERLAY BADGE TO MASK/COVER VIDEO WATERMARK */
+        .watermark-cover-badge {
             position: absolute;
-            bottom: 20px;
+            top: 20px; /* Adjust top/bottom and left/right to align with watermark location */
             right: 20px;
-            z-index: 4;
-            background: rgba(10, 8, 6, 0.75);
-            border: 1px solid rgba(198, 156, 58, 0.6);
-            color: rgba(243, 207, 122, 0.9);
-            padding: 6px 14px;
+            z-index: 10;
+            background: rgba(12, 9, 6, 0.92);
+            border: 1.5px double var(--antique-gold);
+            padding: 8px 16px;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 0 10px var(--gold-glow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(6px);
+        }
+
+        .watermark-cover-title {
+            font-family: var(--font-hp-title);
+            font-size: 0.7rem;
+            color: var(--gold-bright);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .intro-music-btn {
+            background: rgba(198, 156, 58, 0.2);
+            border: 1px solid var(--antique-gold);
+            color: var(--gold-bright);
+            padding: 5px 12px;
             border-radius: 20px;
             cursor: pointer;
             font-family: var(--font-serif);
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 1px;
-            backdrop-filter: blur(4px);
             transition: all 0.3s ease;
         }
 
         .intro-music-btn:hover {
-            background: rgba(198, 156, 58, 0.85);
+            background: var(--antique-gold);
             color: #000;
-            border-color: var(--gold-bright);
+            box-shadow: 0 0 15px var(--gold-bright);
         }
 
         .handwritten-open-btn {
@@ -360,7 +380,6 @@
             opacity: 0.6;
         }
 
-        /* CHAPTER II: SORTING CEREMONY & HAT CONTAINER */
         .sorting-hat-container {
             position: relative;
             width: 100%;
@@ -741,7 +760,7 @@
         .celebration-full-img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Complete uncropped photo display for both browser and mobile */
+            object-fit: contain;
             background: #0d0905;
             filter: grayscale(0.45) sepia(0.3) contrast(1.2) brightness(0.95);
             animation: fullPictureHogwartsMotion 10s infinite ease-in-out alternate;
@@ -830,7 +849,7 @@
             }
 
             .celebration-full-wrapper {
-                height: clamp(200px, 38vh, 320px); /* Custom fit container height for mobile gallery4.jpg */
+                height: clamp(200px, 38vh, 320px);
             }
 
             .face-animation-1 {
@@ -889,7 +908,12 @@
         </video>
         <div class="video-shade"></div>
         <div class="intro-content">
-            <button class="intro-music-btn" id="intro-music-toggle" onclick="toggleAudio()">🎵 MUSIC</button>
+            <!-- PARCHMENT WATERMARK MASKING BADGE (TOP-RIGHT CORNER) -->
+            <div class="watermark-cover-badge">
+                <span class="watermark-cover-title">HOGWARTS XVIII</span>
+                <button class="intro-music-btn" id="intro-music-toggle" onclick="toggleAudio()">🎵 MUSIC</button>
+            </div>
+
             <button class="handwritten-open-btn" id="open-btn" onclick="enterInvitation()">Open Invitation ✦</button>
         </div>
     </div>
@@ -1181,7 +1205,7 @@
             const hatRect = hat.getBoundingClientRect();
             const cardRect = targetCard.getBoundingClientRect();
 
-            // Calculate precise pixel distance to center the hat right over the top border of the chosen house box
+            // Dynamic calculation to anchor the hat on the top border of selected house card
             const deltaX = (cardRect.left + (cardRect.width / 2)) - (hatRect.left + (hatRect.width / 2));
             const deltaY = cardRect.top - hatRect.top - hatRect.height + 15;
 
