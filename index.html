@@ -236,6 +236,32 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.88), inset 0 0 50px rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(8px);
             position: relative;
+            transition: background 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        /* HOUSE THEME BACKGROUND OVERRIDES FOR MENU AND SUCCEEDING PAGES */
+        .parchment-content-box.theme-gryffindor {
+            background: linear-gradient(145deg, rgba(45, 6, 12, 0.94) 0%, rgba(18, 5, 7, 0.92) 100%);
+            border-color: #f87171;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(248, 113, 113, 0.25), inset 0 0 50px rgba(60, 5, 10, 0.8);
+        }
+
+        .parchment-content-box.theme-ravenclaw {
+            background: linear-gradient(145deg, rgba(8, 22, 48, 0.94) 0%, rgba(5, 12, 26, 0.92) 100%);
+            border-color: #60a5fa;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(96, 165, 250, 0.25), inset 0 0 50px rgba(10, 25, 60, 0.8);
+        }
+
+        .parchment-content-box.theme-hufflepuff {
+            background: linear-gradient(145deg, rgba(38, 30, 8, 0.94) 0%, rgba(18, 14, 5, 0.92) 100%);
+            border-color: #facc15;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(250, 204, 21, 0.25), inset 0 0 50px rgba(50, 40, 10, 0.8);
+        }
+
+        .parchment-content-box.theme-slytherin {
+            background: linear-gradient(145deg, rgba(6, 32, 16, 0.94) 0%, rgba(4, 18, 9, 0.92) 100%);
+            border-color: #4ade80;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(74, 222, 128, 0.25), inset 0 0 50px rgba(10, 45, 20, 0.8);
         }
 
         .parchment-content-box::-webkit-scrollbar { width: 5px; }
@@ -963,7 +989,7 @@
 
             <!-- PAGE 3: MAIN MENU HUB & PERSONALITY DESCRIPTION CARD -->
             <div class="page" id="page-2">
-                <div class="parchment-content-box">
+                <div class="parchment-content-box house-themed-page">
                     <div class="chapter-number">CHAPTER III</div>
                     <div class="chapter-title" id="hub-title">THE GREAT HALL</div>
                     
@@ -983,7 +1009,7 @@
 
             <!-- PAGE 4: 18s CLEAN 3-COLUMN LIST WITH FADE-IN ANIMATION -->
             <div class="page" id="page-3">
-                <div class="parchment-content-box">
+                <div class="parchment-content-box house-themed-page">
                     <div class="chapter-number">CHAPTER IV</div>
                     <div class="chapter-title">The 18s Traditions</div>
                     <p style="text-align: center; color: #e6ded1; font-size: clamp(0.7rem, 1.8vw, 0.85rem); font-weight: 600;">The honored guests of Franz's eighteenth milestone.</p>
@@ -1009,7 +1035,7 @@
 
             <!-- PAGE 5: THE EVENING -->
             <div class="page" id="page-4">
-                <div class="parchment-content-box">
+                <div class="parchment-content-box house-themed-page">
                     <div class="chapter-number">CHAPTER V</div>
                     <div class="chapter-title">The Evening</div>
                     <div class="chapter-subtitle" style="margin-bottom: 10px;">Celebration Venue & Timing</div>
@@ -1035,7 +1061,7 @@
 
             <!-- PAGE 6: DRESS CODE & MAP -->
             <div class="page" id="page-5">
-                <div class="parchment-content-box">
+                <div class="parchment-content-box house-themed-page">
                     <div class="chapter-number">CHAPTER VI</div>
                     <div class="chapter-title">Dress Code & Map</div>
                     <div class="chapter-subtitle">Wizarding Attire & Venue Location</div>
@@ -1062,7 +1088,7 @@
 
             <!-- PAGE 7: FACIAL MOVING PORTRAIT GALLERY -->
             <div class="page" id="page-6">
-                <div class="parchment-content-box">
+                <div class="parchment-content-box house-themed-page">
                     <div class="chapter-number">CHAPTER VII</div>
                     <div class="chapter-title">The Living Gallery</div>
                     <div class="chapter-subtitle">Moving Portraits of Franz</div>
@@ -1092,7 +1118,7 @@
 
             <!-- PAGE 8: RSVP -->
             <div class="page" id="page-7">
-                <div class="parchment-content-box">
+                <div class="parchment-content-box house-themed-page">
                     <div class="chapter-number">CHAPTER VIII</div>
                     <div class="chapter-title">Send Your Owl</div>
                     <div class="chapter-subtitle">The Castle Awaits Your Response</div>
@@ -1113,7 +1139,7 @@
 
             <!-- PAGE 9: CHAPTER IX - CELEBRATION (GALLERY4.JPG) -->
             <div class="page" id="page-8">
-                <div class="parchment-content-box">
+                <div class="parchment-content-box house-themed-page">
                     <div class="chapter-number">CHAPTER IX</div>
                     <div class="celebration-full-wrapper">
                         <img src="gallery4.jpg" class="celebration-full-img" alt="We'd love to celebrate with you">
@@ -1165,6 +1191,14 @@
             { id: "slytherin", name: "SLYTHERIN", quote: "Or perhaps in Slytherin you'll make your real friends, those cunning folk use any means to achieve their ends.", color: "#4ade80", franzText: "Like Franz, Slytherins harbor grand ambition, undeniable charm, and the drive to conquer great dreams." }
         ];
 
+        function applyHouseTheme(houseId) {
+            const themedBoxes = document.querySelectorAll('.house-themed-page');
+            themedBoxes.forEach(box => {
+                box.classList.remove('theme-gryffindor', 'theme-ravenclaw', 'theme-hufflepuff', 'theme-slytherin');
+                box.classList.add(`theme-${houseId}`);
+            });
+        }
+
         function sortGuest() {
             const hat = document.getElementById('sorting-hat-element');
             const resultBox = document.getElementById('sorting-result');
@@ -1203,6 +1237,9 @@
                 document.getElementById('hub-title').innerText = `${selectedHouse.name} HALL`;
                 document.getElementById('hub-title').style.color = selectedHouse.color;
                 document.getElementById('franz-personality-text').innerText = `"${selectedHouse.franzText}"`;
+
+                // Update the theme for menu hub and succeeding pages
+                applyHouseTheme(selectedHouse.id);
 
                 setTimeout(() => {
                     hat.style.transform = `translate(0px, 0px) scale(1) rotate(0deg)`;
