@@ -704,15 +704,9 @@
             transform-origin: 50% 25%;
         }
 
-        .face-animation-1 {
-            animation: livingFaceMovement1 8s infinite ease-in-out alternate;
-        }
-        .face-animation-2 {
-            animation: livingFaceMovement2 10s infinite ease-in-out alternate;
-        }
-        .face-animation-3 {
-            animation: livingFaceMovement3 9s infinite ease-in-out alternate;
-        }
+        .face-animation-1 { animation: livingFaceMovement1 8s infinite ease-in-out alternate; }
+        .face-animation-2 { animation: livingFaceMovement2 10s infinite ease-in-out alternate; }
+        .face-animation-3 { animation: livingFaceMovement3 9s infinite ease-in-out alternate; }
 
         @keyframes livingFaceMovement1 {
             0% { transform: scale(1.15) rotate(0deg) translateY(0); filter: grayscale(0.65) sepia(0.45) contrast(1.25); }
@@ -767,7 +761,7 @@
         .celebration-full-img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Complete uncropped photo display for both browser and mobile */
+            object-fit: contain; 
             background: #0d0905;
             filter: grayscale(0.45) sepia(0.3) contrast(1.2) brightness(0.95);
             animation: fullPictureHogwartsMotion 10s infinite ease-in-out alternate;
@@ -856,18 +850,12 @@
             }
 
             .celebration-full-wrapper {
-                height: clamp(200px, 38vh, 320px); /* Custom fit container height for mobile gallery4.jpg */
+                height: clamp(200px, 38vh, 320px); 
             }
 
-            .face-animation-1 {
-                animation: livingFaceMovementMobile1 7.5s infinite ease-in-out alternate;
-            }
-            .face-animation-2 {
-                animation: livingFaceMovementMobile2 9.5s infinite ease-in-out alternate;
-            }
-            .face-animation-3 {
-                animation: livingFaceMovementMobile3 8.5s infinite ease-in-out alternate;
-            }
+            .face-animation-1 { animation: livingFaceMovementMobile1 7.5s infinite ease-in-out alternate; }
+            .face-animation-2 { animation: livingFaceMovementMobile2 9.5s infinite ease-in-out alternate; }
+            .face-animation-3 { animation: livingFaceMovementMobile3 8.5s infinite ease-in-out alternate; }
 
             @keyframes livingFaceMovementMobile1 {
                 0% { transform: scale(1.02) rotate(0deg) translateY(0); filter: grayscale(0.65) sepia(0.45) contrast(1.25); }
@@ -1167,12 +1155,22 @@
         const openBtn = document.getElementById('open-btn');
         const audio = document.getElementById('bg-audio');
 
+        // Original logic: Show button when video reaches 10 seconds
         video.addEventListener('timeupdate', () => {
             if (video.currentTime >= 10.0) {
                 video.pause();
                 openBtn.classList.add('visible');
             }
         });
+
+        // FALLBACK FOR MOBILE FIX: 
+        // If the video autoplay gets blocked by a mobile browser, 
+        // this forcefully reveals the "Open Invitation" button after 4 seconds regardless.
+        setTimeout(() => {
+            if (!openBtn.classList.contains('visible')) {
+                openBtn.classList.add('visible');
+            }
+        }, 4000);
 
         function enterInvitation() {
             const overlay = document.getElementById('video-intro-overlay');
